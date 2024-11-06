@@ -3,7 +3,7 @@ package com.teikk.datn.di
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.teikk.datn.domain.repository.AuthenticationRepository
+import com.teikk.datn.data.datasource.remote.AuthenticationRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
