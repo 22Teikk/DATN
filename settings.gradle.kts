@@ -20,5 +20,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "DATN"
-include(":admin")
 include(":client")
+include(":admin")

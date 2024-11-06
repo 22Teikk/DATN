@@ -1,28 +1,20 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("kotlin-kapt")
-    id("com.google.dagger.hilt.android")
-    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
-    namespace = "com.teikk.datn"
+    namespace = "com.teikk.client"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.teikk.datn"
+        applicationId = "com.teikk.client"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildFeatures {
-        dataBinding = true
-        viewBinding = true
     }
 
     buildTypes {
@@ -50,43 +42,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    implementation(libs.firebase.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    // Hilt
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
-
-    // Image
-    implementation(libs.glide)
-    implementation(libs.lottie)
-
-    // Room Database
-    implementation(libs.androidx.room.runtime)
-    kapt(libs.androidx.room.compiler)
-    implementation(libs.androidx.room.ktx)
-
-    // Responsive
-    implementation(libs.sdp.android)
-    implementation(libs.ssp.android)
-
-    //retrofit
-    implementation(libs.retrofit)
-    implementation(libs.logging.interceptor)
-    implementation(libs.converter.gson)
-
-    //    // Coroutine
-    implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.kotlinx.coroutines.core)
-
-    //    // Coroutine Lifecycle Scopes
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.ktx)
-
-    // Navigation Components
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
 }
