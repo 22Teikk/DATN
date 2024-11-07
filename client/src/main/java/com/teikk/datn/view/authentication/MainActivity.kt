@@ -1,6 +1,5 @@
 package com.teikk.datn.view.authentication
 
-import android.util.Log
 import androidx.activity.viewModels
 import com.teikk.datn.R
 import com.teikk.datn.base.BaseActivity
@@ -11,7 +10,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private val viewModel: AuthenticationViewModel by viewModels()
-    private val entityViewModel: EntityViewModel by viewModels()
     override fun getLayoutResId(): Int {
         return R.layout.activity_main
     }

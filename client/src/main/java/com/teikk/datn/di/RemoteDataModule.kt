@@ -1,10 +1,9 @@
 package com.teikk.datn.di
 
 import com.teikk.datn.base.SharedPreferenceUtils
-import com.teikk.datn.data.datasource.remote.EntityRepository
-import com.teikk.datn.data.datasource.service.ApiService
 import com.teikk.datn.data.datasource.remote.AuthRepository
 import com.teikk.datn.data.datasource.remote.RoleRemoteRepository
+import com.teikk.datn.data.datasource.service.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,7 +16,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RetrofitModule {
+object RemoteDataModule {
     private const val BASE_URL = "http://192.168.1.253:5001/api/v1/"
     @Provides
     @Singleton
@@ -40,19 +39,10 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    fun provideEntityRepository(apiService: ApiService): EntityRepository {
-        return EntityRepository(apiService)
-    }
-
-    @Provides
-    @Singleton
     fun provideAuthService(apiService: ApiService, sharedPreferenceUtils: SharedPreferenceUtils): AuthRepository {
         return AuthRepository(apiService, sharedPreferenceUtils)
     }
-
     @Provides
     @Singleton
-    fun provideRoleService(apiService: ApiService, sharedPreferenceUtils: SharedPreferenceUtils): RoleRemoteRepository {
-        return RoleRemoteRepository(apiService, sharedPreferenceUtils)
-    }
+    fun provideRoleRemote(apiService: ApiService, sharedPreferenceUtils: SharedPreferenceUtils) = RoleRemoteRepository(apiService, sharedPreferenceUtils)
 }
