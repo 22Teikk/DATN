@@ -3,8 +3,9 @@ package com.teikk.datn.view.splash
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bumptech.glide.Glide.init
 import com.teikk.datn.base.SharedPreferenceUtils
+import com.teikk.datn.data.datasource.repository.CategoryRepository
+import com.teikk.datn.data.datasource.repository.PaymentMethodRepository
 import com.teikk.datn.data.datasource.repository.RoleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,11 +15,13 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     private val sharedPreferences: SharedPreferenceUtils,
-    private val roleRepository: RoleRepository
+    private val roleRepository: RoleRepository,
+    private val categoryRepository: CategoryRepository,
+    private val paymentMethodRepository: PaymentMethodRepository
 ) : ViewModel() {
     private val TAG = "SplashViewModel-TAG"
     private val _isFirstTime = MutableLiveData<Boolean>()
-    private val rolesData = roleRepository.rolesLiveData
+    val rolesData = roleRepository.rolesLiveData
     init {
         _isFirstTime.value = sharedPreferences.getBooleanValue("isFirstTime", true)
         if (_isFirstTime.value == true) {
@@ -29,6 +32,8 @@ class SplashViewModel @Inject constructor(
 
     private fun firstInit() = viewModelScope.launch(Dispatchers.IO) {
         roleRepository.fetchRoleData()
+        categoryRepository.fetchCategoryData()
+        paymentMethodRepository.fetchPaymentMethodData()
         sharedPreferences.putBooleanValue("isFirstTime", false)
         _isFirstTime.postValue(false)
     }

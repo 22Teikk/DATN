@@ -1,6 +1,7 @@
 package com.teikk.datn.view.splash
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +11,9 @@ import androidx.databinding.DataBindingUtil.setContentView
 import com.teikk.datn.R
 import com.teikk.datn.base.BaseActivity
 import com.teikk.datn.databinding.ActivitySplashBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     private val viewModel: SplashViewModel by viewModels()
     override fun getLayoutResId(): Int {
@@ -19,5 +22,15 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     override fun init() {
 
+    }
+
+    override fun initObserve() {
+        viewModel.rolesData.observe(this) {
+            Log.d(TAG, it.toString())
+        }
+    }
+
+    companion object {
+        private val TAG = "SplashActivity-TAG"
     }
 }

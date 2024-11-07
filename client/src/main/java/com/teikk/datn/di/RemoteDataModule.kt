@@ -2,6 +2,8 @@ package com.teikk.datn.di
 
 import com.teikk.datn.base.SharedPreferenceUtils
 import com.teikk.datn.data.datasource.remote.AuthRepository
+import com.teikk.datn.data.datasource.remote.CategoryRemoteRepository
+import com.teikk.datn.data.datasource.remote.PaymentMethodRemoteRepository
 import com.teikk.datn.data.datasource.remote.RoleRemoteRepository
 import com.teikk.datn.data.datasource.service.ApiService
 import dagger.Module
@@ -45,4 +47,13 @@ object RemoteDataModule {
     @Provides
     @Singleton
     fun provideRoleRemote(apiService: ApiService, sharedPreferenceUtils: SharedPreferenceUtils) = RoleRemoteRepository(apiService, sharedPreferenceUtils)
+
+    @Provides
+    @Singleton
+    fun provideCategoryRemote(apiService: ApiService, sharedPreferenceUtils: SharedPreferenceUtils) = CategoryRemoteRepository(apiService, sharedPreferenceUtils)
+
+    @Provides
+    @Singleton
+    fun providePaymentMethodRemote(apiService: ApiService, sharedPreferenceUtils: SharedPreferenceUtils) = PaymentMethodRemoteRepository(apiService, sharedPreferenceUtils)
+
 }
