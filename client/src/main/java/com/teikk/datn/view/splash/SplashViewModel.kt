@@ -1,8 +1,10 @@
 package com.teikk.datn.view.splash
 
+import android.os.Looper
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bumptech.glide.Glide.init
 import com.teikk.datn.base.SharedPreferenceUtils
 import com.teikk.datn.data.datasource.repository.CategoryRepository
 import com.teikk.datn.data.datasource.repository.PaymentMethodRepository
@@ -10,6 +12,7 @@ import com.teikk.datn.data.datasource.repository.RoleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.logging.Handler
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,12 +24,15 @@ class SplashViewModel @Inject constructor(
 ) : ViewModel() {
     private val TAG = "SplashViewModel-TAG"
     private val _isFirstTime = MutableLiveData<Boolean>()
-    val rolesData = roleRepository.rolesLiveData
+    val isFirstTime get() = _isFirstTime
     init {
-        _isFirstTime.value = sharedPreferences.getBooleanValue("isFirstTime", true)
-        if (_isFirstTime.value == true) {
+        val firstTime = sharedPreferences.getBooleanValue("isFirstTime", true)
+        if (firstTime) {
             firstInit()
         } else {
+            android.os.Handler(Looper.getMainLooper()).postDelayed({
+                _isFirstTime.value = false
+            }, 2000)
         }
     }
 

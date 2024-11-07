@@ -2,6 +2,7 @@ package com.teikk.datn.view.splash
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -20,13 +21,13 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         return R.layout.activity_splash
     }
 
-    override fun init() {
-
-    }
-
     override fun initObserve() {
-        viewModel.rolesData.observe(this) {
-            Log.d(TAG, it.toString())
+        viewModel.isFirstTime.observe(this) {
+            if (it) {
+                binding.imageView.visibility = View.VISIBLE
+            } else {
+                binding.imageView.visibility = View.GONE
+            }
         }
     }
 
