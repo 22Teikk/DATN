@@ -20,7 +20,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 //                viewModel.signUpWithEmail("nguyenhuy@gmail.com", "123456") {
 //                    Log.d(TAG, "signUpWithEmail: success is " + it)
 //                }
-                viewModel.register("klasdfio2wueoisdn@gmail.com", "string")
+                viewModel.register("klasdfio2wueoisdn@gmail.com", "string") {
+
+                }
             }
             button2.setOnClickListener {
 //                viewModel.signInWithEmail("nguyenhuy@gmail.com", "123456") {

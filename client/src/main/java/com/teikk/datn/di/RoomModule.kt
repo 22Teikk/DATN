@@ -5,6 +5,7 @@ import com.teikk.datn.data.datasource.service.DatabaseApp
 import com.teikk.datn.data.datasource.service.dao.CategoryDao
 import com.teikk.datn.data.datasource.service.dao.PaymentMethodDao
 import com.teikk.datn.data.datasource.service.dao.RoleDao
+import com.teikk.datn.data.datasource.service.dao.UserProfileDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,5 +39,11 @@ object RoomModule {
     @Provides
     fun providePaymentMethodDao(databaseApp: DatabaseApp) : PaymentMethodDao {
         return databaseApp.paymentMethodDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserProfileDao(databaseApp: DatabaseApp) : UserProfileDao {
+        return databaseApp.userProfileDao()
     }
 }

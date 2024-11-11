@@ -4,6 +4,7 @@ import com.teikk.datn.base.SharedPreferenceUtils
 
 object ShareConstant {
     private const val TOKEN = "TOKEN"
+    const val UID = "UID"
 
     fun saveToken(sharedPreferenceUtils: SharedPreferenceUtils, token: String) {
         sharedPreferenceUtils.putStringValue(TOKEN, token)

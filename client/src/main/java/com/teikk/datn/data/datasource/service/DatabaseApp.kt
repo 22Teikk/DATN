@@ -8,6 +8,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.teikk.datn.data.datasource.service.dao.CategoryDao
 import com.teikk.datn.data.datasource.service.dao.PaymentMethodDao
 import com.teikk.datn.data.datasource.service.dao.RoleDao
+import com.teikk.datn.data.datasource.service.dao.UserProfileDao
 import com.teikk.datn.data.model.Category
 import com.teikk.datn.data.model.PaymentMethod
 import com.teikk.datn.data.model.Role
@@ -19,7 +20,7 @@ abstract class DatabaseApp : RoomDatabase() {
     abstract fun roleDao() : RoleDao
     abstract fun categoryDao() : CategoryDao
     abstract fun paymentMethodDao() : PaymentMethodDao
-
+    abstract fun userProfileDao() : UserProfileDao
     companion object{
         @Volatile
         private var INSTANCE: DatabaseApp? = null

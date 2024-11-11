@@ -3,9 +3,11 @@ package com.teikk.datn.di
 import com.teikk.datn.data.datasource.local.CategoryLocalRepository
 import com.teikk.datn.data.datasource.local.PaymentMethodLocalRepository
 import com.teikk.datn.data.datasource.local.RoleLocalRepository
+import com.teikk.datn.data.datasource.local.UserProfileLocalRepository
 import com.teikk.datn.data.datasource.service.dao.CategoryDao
 import com.teikk.datn.data.datasource.service.dao.PaymentMethodDao
 import com.teikk.datn.data.datasource.service.dao.RoleDao
+import com.teikk.datn.data.datasource.service.dao.UserProfileDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,4 +28,8 @@ object LocalDataModule {
     @Provides
     @Singleton
     fun providePaymentMethodRepository(paymentMethodDao: PaymentMethodDao) = PaymentMethodLocalRepository(paymentMethodDao)
+
+    @Provides
+    @Singleton
+    fun provideUserProfileRepository(userProfileDao: UserProfileDao) = UserProfileLocalRepository(userProfileDao)
 }

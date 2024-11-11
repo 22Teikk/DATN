@@ -5,6 +5,8 @@ import com.teikk.datn.data.datasource.remote.AuthRepository
 import com.teikk.datn.data.datasource.remote.CategoryRemoteRepository
 import com.teikk.datn.data.datasource.remote.PaymentMethodRemoteRepository
 import com.teikk.datn.data.datasource.remote.RoleRemoteRepository
+import com.teikk.datn.data.datasource.repository.UploadFileRepository
+import com.teikk.datn.data.datasource.remote.UserProfileRemoteRepository
 import com.teikk.datn.data.datasource.service.ApiService
 import dagger.Module
 import dagger.Provides
@@ -19,7 +21,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RemoteDataModule {
-    private const val BASE_URL = "http://192.168.1.253:5001/api/v1/"
+    private const val BASE_URL = "http://192.168.1.253:5001/"
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
@@ -56,4 +58,11 @@ object RemoteDataModule {
     @Singleton
     fun providePaymentMethodRemote(apiService: ApiService, sharedPreferenceUtils: SharedPreferenceUtils) = PaymentMethodRemoteRepository(apiService, sharedPreferenceUtils)
 
+    @Provides
+    @Singleton
+    fun provideUserProfileRemote(apiService: ApiService, sharedPreferenceUtils: SharedPreferenceUtils) = UserProfileRemoteRepository(apiService, sharedPreferenceUtils)
+
+    @Provides
+    @Singleton
+    fun provideUploadFile(apiService: ApiService) = UploadFileRepository(apiService)
 }
