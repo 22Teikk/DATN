@@ -4,6 +4,7 @@ import com.teikk.datn.base.SharedPreferenceUtils
 import com.teikk.datn.data.datasource.remote.AuthRepository
 import com.teikk.datn.data.datasource.remote.CategoryRemoteRepository
 import com.teikk.datn.data.datasource.remote.PaymentMethodRemoteRepository
+import com.teikk.datn.data.datasource.remote.ProductRemoteRepository
 import com.teikk.datn.data.datasource.remote.RoleRemoteRepository
 import com.teikk.datn.data.datasource.repository.UploadFileRepository
 import com.teikk.datn.data.datasource.remote.UserProfileRemoteRepository
@@ -65,4 +66,8 @@ object RemoteDataModule {
     @Provides
     @Singleton
     fun provideUploadFile(apiService: ApiService) = UploadFileRepository(apiService)
+
+    @Provides
+    @Singleton
+    fun provideProductRemote(apiService: ApiService, sharedPreferenceUtils: SharedPreferenceUtils) = ProductRemoteRepository(apiService, sharedPreferenceUtils)
 }

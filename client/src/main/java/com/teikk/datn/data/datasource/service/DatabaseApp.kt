@@ -7,20 +7,22 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.teikk.datn.data.datasource.service.dao.CategoryDao
 import com.teikk.datn.data.datasource.service.dao.PaymentMethodDao
+import com.teikk.datn.data.datasource.service.dao.ProductDao
 import com.teikk.datn.data.datasource.service.dao.RoleDao
 import com.teikk.datn.data.datasource.service.dao.UserProfileDao
 import com.teikk.datn.data.model.Category
 import com.teikk.datn.data.model.PaymentMethod
+import com.teikk.datn.data.model.Product
 import com.teikk.datn.data.model.Role
 import com.teikk.datn.data.model.UserProfile
 
-@Database(entities = [Role::class, Category::class, UserProfile::class, PaymentMethod::class], version = 1, exportSchema = false)
+@Database(entities = [Product::class, Role::class, Category::class, UserProfile::class, PaymentMethod::class], version = 1, exportSchema = false)
 abstract class DatabaseApp : RoomDatabase() {
-//    abstract fun userDao() : UserDao
     abstract fun roleDao() : RoleDao
     abstract fun categoryDao() : CategoryDao
     abstract fun paymentMethodDao() : PaymentMethodDao
     abstract fun userProfileDao() : UserProfileDao
+    abstract fun productDao() : ProductDao
     companion object{
         @Volatile
         private var INSTANCE: DatabaseApp? = null

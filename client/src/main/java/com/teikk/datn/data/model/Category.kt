@@ -10,4 +10,6 @@ data class Category(
     @SerializedName("_id")
     var id: String,
     var name: String,
+    @SerializedName("image_url")
+    var imageUrl: String
 )

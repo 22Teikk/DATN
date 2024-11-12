@@ -10,11 +10,11 @@ import com.teikk.datn.data.model.PaymentMethod
 @Dao
 interface PaymentMethodDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPaymentMethods(roles: List<PaymentMethod>)
+    fun insertPaymentMethods(roles: List<PaymentMethod>)
 
     @Delete
-    suspend fun delete(role: PaymentMethod)
+    fun delete(role: PaymentMethod)
 
     @Query("SELECT * FROM role_tables")
-    suspend fun getAllPaymentMethod(): List<PaymentMethod>
+    fun getAllPaymentMethod(): List<PaymentMethod>
 }

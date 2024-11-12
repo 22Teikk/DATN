@@ -14,6 +14,7 @@ import com.teikk.datn.R
 import com.teikk.datn.base.BaseActivity
 import com.teikk.datn.databinding.ActivitySplashBinding
 import com.teikk.datn.view.authentication.AuthenticationActivity
+import com.teikk.datn.view.dashboard.DashBoardActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,7 +30,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                 binding.imageView.visibility = View.VISIBLE
             } else {
                 binding.imageView.visibility = View.GONE
-                startActivity(Intent(this, AuthenticationActivity::class.java).apply {
+                startActivity(Intent(this, DashBoardActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 })
             }

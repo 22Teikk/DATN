@@ -10,12 +10,12 @@ import com.teikk.datn.data.model.Category
 @Dao
 interface CategoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCategories(categories: List<Category>)
+    fun insertCategories(categories: List<Category>)
 
     @Delete
-    suspend fun delete(category: Category)
+    fun delete(category: Category)
 
     @Query("SELECT * FROM category_tables")
-    suspend fun getAllCategory(): List<Category>
+    fun getAllCategory(): List<Category>
 
 }

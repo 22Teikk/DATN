@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dashboard_nav.xml"
+    app:startDestination="@id/exploreFragment">
+    <fragment
+        android:id="@+id/exploreFragment"
+        android:name="com.teikk.datn.view.dashboard.fragment.ExploreFragment"
+        android:label="@string/explore" />
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.teikk.datn.view.dashboard.fragment.CartFragment"
+        android:label="@string/cart" />
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.teikk.datn.view.dashboard.fragment.FavoriteFragment"
+        android:label="@string/favorite" />
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.teikk.datn.view.dashboard.fragment.MapFragment"
+        android:label="@string/map" />
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.teikk.datn.view.dashboard.fragment.NotificationFragment"
+        android:label="@string/notification" />
+</navigation>

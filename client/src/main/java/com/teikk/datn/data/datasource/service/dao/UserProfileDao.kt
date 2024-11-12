@@ -11,15 +11,15 @@ import com.teikk.datn.data.model.UserProfile
 @Dao
 interface UserProfileDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(user: UserProfile)
+    fun insert(user: UserProfile)
 
     @Update
-    suspend fun update(user: UserProfile)
+    fun update(user: UserProfile)
     
     @Delete
-    suspend fun delete(user: UserProfile)
+    fun delete(user: UserProfile)
 
     @Query("SELECT * FROM user_table WHERE id = :id")
-    suspend fun getUserByID(id: String): UserProfile
+    fun getUserByID(id: String): UserProfile
 
 }

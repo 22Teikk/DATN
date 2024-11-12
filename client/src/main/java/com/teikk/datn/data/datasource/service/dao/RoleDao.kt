@@ -11,12 +11,12 @@ import com.teikk.datn.data.model.Role
 @Dao
 interface RoleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertRoles(roles: List<Role>)
+    fun insertRoles(roles: List<Role>)
 
     @Delete
-    suspend fun delete(role: Role)
+    fun delete(role: Role)
 
     @Query("SELECT * FROM role_tables")
-    suspend fun getAllRole(): List<Role>
+    fun getAllRole(): List<Role>
 
 }

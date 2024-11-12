@@ -1,0 +1,24 @@
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/exploreFragment"
+        android:icon="@drawable/icon_explore"
+        android:title="@string/explore" />
+    <item
+        android:id="@+id/mapFragment"
+        android:icon="@drawable/icon_map"
+        android:title="@string/map" />
+    <item
+        android:id="@+id/cartFragment"
+        android:icon="@drawable/icon_cart"
+        android:title="@string/cart" />
+    <item
+        android:id="@+id/favoriteFragment"
+        android:icon="@drawable/icon_favorite"
+        android:title="@string/favorite" />
+
+    <item
+        android:id="@+id/notificationFragment"
+        android:icon="@drawable/icon_notification"
+        android:title="@string/notification" />
+</menu>
