@@ -1,6 +1,7 @@
 package com.teikk.datn.view.dashboard
 
 import android.os.Bundle
+import android.view.Gravity
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -41,6 +42,10 @@ class DashBoardActivity : BaseActivity<ActivityDashBoardBinding>() {
     override fun initObserve() {
         badgeCart.number = 20
         badgeNotification.isVisible = true
+    }
+
+    fun openDrawer() {
+        binding.main.openDrawer(Gravity.START)
     }
 
     companion object {
