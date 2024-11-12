@@ -1,6 +1,6 @@
 package com.teikk.datn.data.datasource.local
 
-import com.teikk.datn.data.datasource.service.dao.RoleDao
+import com.teikk.datn.data.service.dao.RoleDao
 import com.teikk.datn.data.model.Role
 import javax.inject.Inject
 

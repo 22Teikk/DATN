@@ -1,11 +1,11 @@
 package com.teikk.datn.di
 
 import android.content.Context
-import com.teikk.datn.data.datasource.service.DatabaseApp
-import com.teikk.datn.data.datasource.service.dao.CategoryDao
-import com.teikk.datn.data.datasource.service.dao.PaymentMethodDao
-import com.teikk.datn.data.datasource.service.dao.RoleDao
-import com.teikk.datn.data.datasource.service.dao.UserProfileDao
+import com.teikk.datn.data.service.DatabaseApp
+import com.teikk.datn.data.service.dao.CategoryDao
+import com.teikk.datn.data.service.dao.PaymentMethodDao
+import com.teikk.datn.data.service.dao.RoleDao
+import com.teikk.datn.data.service.dao.UserProfileDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

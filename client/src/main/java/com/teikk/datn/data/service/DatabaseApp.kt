@@ -1,15 +1,15 @@
-package com.teikk.datn.data.datasource.service
+package com.teikk.datn.data.service
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.teikk.datn.data.datasource.service.dao.CategoryDao
-import com.teikk.datn.data.datasource.service.dao.PaymentMethodDao
-import com.teikk.datn.data.datasource.service.dao.ProductDao
-import com.teikk.datn.data.datasource.service.dao.RoleDao
-import com.teikk.datn.data.datasource.service.dao.UserProfileDao
+import com.teikk.datn.data.service.dao.CategoryDao
+import com.teikk.datn.data.service.dao.PaymentMethodDao
+import com.teikk.datn.data.service.dao.ProductDao
+import com.teikk.datn.data.service.dao.RoleDao
+import com.teikk.datn.data.service.dao.UserProfileDao
 import com.teikk.datn.data.model.Category
 import com.teikk.datn.data.model.PaymentMethod
 import com.teikk.datn.data.model.Product

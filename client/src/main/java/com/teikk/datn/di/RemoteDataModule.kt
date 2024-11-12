@@ -8,7 +8,7 @@ import com.teikk.datn.data.datasource.remote.ProductRemoteRepository
 import com.teikk.datn.data.datasource.remote.RoleRemoteRepository
 import com.teikk.datn.data.datasource.repository.UploadFileRepository
 import com.teikk.datn.data.datasource.remote.UserProfileRemoteRepository
-import com.teikk.datn.data.datasource.service.ApiService
+import com.teikk.datn.data.service.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,7 +22,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RemoteDataModule {
-    private const val BASE_URL = "http://192.168.1.253:5001/"
+    const val BASE_URL = "http://192.168.1.253:5001/"
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {

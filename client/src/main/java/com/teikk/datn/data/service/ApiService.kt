@@ -1,4 +1,4 @@
-package com.teikk.datn.data.datasource.service
+package com.teikk.datn.data.service
 
 import com.google.gson.JsonObject
 import com.teikk.datn.data.model.Category

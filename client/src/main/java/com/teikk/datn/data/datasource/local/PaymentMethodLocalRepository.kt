@@ -1,6 +1,6 @@
 package com.teikk.datn.data.datasource.local
 
-import com.teikk.datn.data.datasource.service.dao.PaymentMethodDao
+import com.teikk.datn.data.service.dao.PaymentMethodDao
 import com.teikk.datn.data.model.PaymentMethod
 import javax.inject.Inject
 

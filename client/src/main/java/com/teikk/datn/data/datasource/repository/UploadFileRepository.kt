@@ -1,6 +1,6 @@
 package com.teikk.datn.data.datasource.repository
 
-import com.teikk.datn.data.datasource.service.ApiService
+import com.teikk.datn.data.service.ApiService
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

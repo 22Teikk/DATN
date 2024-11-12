@@ -93,4 +93,8 @@ dependencies {
 
     implementation(libs.circleimageview)
 
+    implementation("io.socket:socket.io-client:2.0.0") {
+        exclude(group = "org.json", module = "json")
+    }
+
 }

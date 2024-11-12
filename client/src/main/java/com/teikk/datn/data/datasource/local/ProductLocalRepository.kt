@@ -1,6 +1,6 @@
 package com.teikk.datn.data.datasource.local
 
-import com.teikk.datn.data.datasource.service.dao.ProductDao
+import com.teikk.datn.data.service.dao.ProductDao
 import com.teikk.datn.data.model.Product
 import javax.inject.Inject
 

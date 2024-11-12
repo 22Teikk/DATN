@@ -1,13 +1,18 @@
 package com.teikk.datn.view.dashboard.fragment
 
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.activityViewModels
 import com.teikk.datn.R
 import com.teikk.datn.base.BaseFragment
 import com.teikk.datn.base.setSafeOnClickListener
 import com.teikk.datn.databinding.FragmentExploreBinding
 import com.teikk.datn.view.dashboard.DashBoardActivity
+import com.teikk.datn.view.dashboard.DashBoardViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
+    private val viewModel by activityViewModels<DashBoardViewModel>()
     override fun getLayoutResId(): Int {
         return R.layout.fragment_explore
     }
@@ -19,6 +24,9 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
         with (binding) {
             btnMenu.setSafeOnClickListener {
                 (requireActivity() as DashBoardActivity).openDrawer()
+            }
+            btnSocket.setSafeOnClickListener {
+                viewModel.connectSocket()
             }
         }
     }

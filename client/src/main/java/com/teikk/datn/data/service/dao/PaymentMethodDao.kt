@@ -1,4 +1,4 @@
-package com.teikk.datn.data.datasource.service.dao
+package com.teikk.datn.data.service.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
