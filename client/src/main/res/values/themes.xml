@@ -18,5 +18,9 @@
         <item name="android:fontFamily">@font/sofia_semi_bold</item>
     </style>
 
+    <style name="SearchStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:fontFamily">@font/sofia_semi_bold</item>
+    </style>
+
     <style name="Theme.DATN" parent="Base.Theme.DATN" />
 </resources>
