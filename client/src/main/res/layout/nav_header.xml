@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_header"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -12,11 +13,12 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <de.hdodenhof.circleimageview.CircleImageView
+        app:civ_border_overlay="true"
         android:layout_marginTop="@dimen/_20sdp"
         android:id="@+id/nav_header_imageView"
         android:layout_width="@dimen/_80sdp"
         android:layout_height="@dimen/_80sdp"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@drawable/test" />
 
     <TextView
         android:layout_marginTop="@dimen/_5sdp"

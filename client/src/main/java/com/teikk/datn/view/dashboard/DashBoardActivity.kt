@@ -43,12 +43,16 @@ class DashBoardActivity : BaseActivity<ActivityDashBoardBinding>() {
                 when (menuItem.itemId) {
                     R.id.orderFragment -> {
                         Log.d(TAG, "Click to here")
-//                        navController.navigate()
                         closeDrawerAndHideBottomNav()
                         true
                     }
                     R.id.profileFragment -> {
                         navController.navigate(R.id.action_exploreFragment_to_profileFragment2)
+                        closeDrawerAndHideBottomNav()
+                        true
+                    }
+                    R.id.addressFragment -> {
+                        navController.navigate(R.id.action_exploreFragment_to_addressFragment2)
                         closeDrawerAndHideBottomNav()
                         true
                     }

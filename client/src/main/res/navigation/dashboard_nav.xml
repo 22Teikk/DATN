@@ -10,6 +10,9 @@
         <action
             android:id="@+id/action_exploreFragment_to_profileFragment2"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_exploreFragment_to_addressFragment2"
+            app:destination="@id/addressFragment" />
     </fragment>
     <fragment
         android:id="@+id/cartFragment"
@@ -31,4 +34,8 @@
         android:id="@+id/profileFragment"
         android:name="com.teikk.datn.view.dashboard.fragment.ProfileFragment"
         android:label="@string/profile" />
+    <fragment
+        android:id="@+id/addressFragment"
+        android:name="com.teikk.datn.view.dashboard.fragment.AddressFragment"
+        android:label="Address" />
 </navigation>

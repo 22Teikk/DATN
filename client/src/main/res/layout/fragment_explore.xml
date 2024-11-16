@@ -97,7 +97,7 @@
                 android:queryBackground="@android:color/transparent"
                 android:iconifiedByDefault="false"
                 android:inputType="text"
-                android:searchHintIcon="@color/grey"
+                android:searchIcon="@drawable/icon_search"
                 android:textStyle="normal"
                 android:textSize="16sp"
                 android:queryHint="Find for food..."
