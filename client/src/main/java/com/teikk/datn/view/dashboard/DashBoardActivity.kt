@@ -56,6 +56,11 @@ class DashBoardActivity : BaseActivity<ActivityDashBoardBinding>() {
                         closeDrawerAndHideBottomNav()
                         true
                     }
+                    R.id.paymentMethodFragment -> {
+                        navController.navigate(R.id.action_exploreFragment_to_paymentMethodFragment2)
+                        closeDrawerAndHideBottomNav()
+                        true
+                    }
                     else -> {
                         false
                     }
