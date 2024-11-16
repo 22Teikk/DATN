@@ -1,6 +1,7 @@
 package com.teikk.datn.view.dashboard.fragment
 
 import androidx.activity.OnBackPressedCallback
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.teikk.datn.R
 import com.teikk.datn.base.BaseFragment
 import com.teikk.datn.databinding.FragmentCartBinding
@@ -12,6 +13,9 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
     }
 
     override fun init() {
+        with(binding) {
+            rcvPrice.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
+        }
     }
 
     override fun onResume() {
