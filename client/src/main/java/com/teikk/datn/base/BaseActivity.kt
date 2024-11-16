@@ -8,6 +8,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LiveData
+import com.teikk.datn.base.HideNavigation.Companion.systemBarBlack
 import javax.inject.Inject
 
 
@@ -23,15 +24,15 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, getLayoutResId())
-        HideNavigation.fullScreenCall(this)
+//        HideNavigation.fullScreenCall(this)
         HideKeyboard.setupUI(binding.root, this)
-        enableEdgeToEdge()
+//        enableEdgeToEdge()
 //        systemBarBlack(true)
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+//        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+//            insets
+//        }
         init()
         initData()
         initObserve()

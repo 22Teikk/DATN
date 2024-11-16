@@ -3,31 +3,84 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
+        android:orientation="vertical"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/btnMenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Open Drawer"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5" />
+            android:layout_height="?actionBarSize">
 
-        <Button
-            android:id="@+id/btnSocket"
-            android:layout_width="wrap_content"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btnMenu"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:shadowColor="#D3D1D8"
+                android:layout_gravity="center_vertical"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="@dimen/_5sdp"
+                app:cardBackgroundColor="@color/white">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_10sdp"
+                    android:src="@drawable/icon_menu"/>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@color/grey"
+                    android:layout_height="wrap_content"
+                    android:text="Delivery To"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@color/orange"
+                    android:layout_height="wrap_content"
+                    android:text="sdfhjksd"/>
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:shadowColor="#D3D1D8"
+                android:layout_gravity="center_vertical"
+                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardElevation="@dimen/_5sdp"
+                app:cardBackgroundColor="@color/white">
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/test"
+                    android:scaleType="centerCrop"
+                    android:id="@+id/encrypted" />
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="Socket"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnMenu" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:fontFamily="@font/sofia_semi_bold"
+            android:text="What would you like\nto order"
+            android:textSize="@dimen/_30ssp"/>
+
+    </LinearLayout>
 </layout>

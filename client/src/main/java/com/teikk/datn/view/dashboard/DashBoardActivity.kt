@@ -1,11 +1,10 @@
 package com.teikk.datn.view.dashboard
 
-import android.os.Bundle
-import android.view.Gravity
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import android.content.Intent
+import android.util.Log
+import android.view.View
+import androidx.activity.viewModels
+import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -13,6 +12,7 @@ import com.google.android.material.badge.BadgeDrawable
 import com.teikk.datn.R
 import com.teikk.datn.base.BaseActivity
 import com.teikk.datn.databinding.ActivityDashBoardBinding
+import com.teikk.datn.view.authentication.AuthenticationActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,6 +20,7 @@ class DashBoardActivity : BaseActivity<ActivityDashBoardBinding>() {
     private lateinit var navController: NavController
     private lateinit var badgeCart: BadgeDrawable
     private lateinit var badgeNotification: BadgeDrawable
+    private val viewModel by viewModels<DashBoardViewModel>()
     override fun getLayoutResId(): Int {
         return R.layout.activity_dash_board
     }
@@ -35,8 +36,32 @@ class DashBoardActivity : BaseActivity<ActivityDashBoardBinding>() {
             badgeNotification = bottomNavigation.getOrCreateBadge(R.id.notificationFragment).apply {
                 badgeGravity = BadgeDrawable.TOP_END
             }
+            binding.navigationView.setNavigationItemSelectedListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.orderFragment -> {
+                        Log.d(TAG, "Click to here")
+//                        navController.navigate()
+                        closeDrawerAndHideBottomNav()
+                        true
+                    }
+                    else -> {
+                        false
+                    }
+                }
+            }
         }
+    }
 
+    override fun initEvent() {
+        with(binding) {
+            btnLogout.setOnClickListener {
+                viewModel.logout {
+                    startActivity(Intent(this@DashBoardActivity, AuthenticationActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    })
+                }
+            }
+        }
     }
 
     override fun initObserve() {
@@ -45,7 +70,18 @@ class DashBoardActivity : BaseActivity<ActivityDashBoardBinding>() {
     }
 
     fun openDrawer() {
-        binding.main.openDrawer(Gravity.START)
+        binding.main.openDrawer(GravityCompat.START)
+    }
+
+    private fun closeDrawerAndHideBottomNav() {
+        with(binding) {
+            main.closeDrawer(GravityCompat.START)
+            bottomNavigation.visibility = View.GONE
+        }
+    }
+
+    fun showBottomNav() {
+        binding.bottomNavigation.visibility = View.VISIBLE
     }
 
     companion object {

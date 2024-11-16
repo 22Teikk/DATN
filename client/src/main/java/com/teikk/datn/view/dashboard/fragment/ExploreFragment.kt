@@ -25,10 +25,12 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
             btnMenu.setSafeOnClickListener {
                 (requireActivity() as DashBoardActivity).openDrawer()
             }
-            btnSocket.setSafeOnClickListener {
-                viewModel.connectSocket()
-            }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as DashBoardActivity).showBottomNav()
     }
 
     override val onBackPressedCallback: OnBackPressedCallback
