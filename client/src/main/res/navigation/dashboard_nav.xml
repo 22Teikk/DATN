@@ -6,7 +6,11 @@
     <fragment
         android:id="@+id/exploreFragment"
         android:name="com.teikk.datn.view.dashboard.fragment.ExploreFragment"
-        android:label="@string/explore" />
+        android:label="@string/explore" >
+        <action
+            android:id="@+id/action_exploreFragment_to_profileFragment2"
+            app:destination="@id/profileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/cartFragment"
         android:name="com.teikk.datn.view.dashboard.fragment.CartFragment"
@@ -23,4 +27,8 @@
         android:id="@+id/notificationFragment"
         android:name="com.teikk.datn.view.dashboard.fragment.NotificationFragment"
         android:label="@string/notification" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.teikk.datn.view.dashboard.fragment.ProfileFragment"
+        android:label="@string/profile" />
 </navigation>

@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -29,6 +30,8 @@ class DashBoardActivity : BaseActivity<ActivityDashBoardBinding>() {
         navController = findNavController(R.id.dashboardNavController)
         with(binding) {
             bottomNavigation.setupWithNavController(navController)
+            main.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+
             badgeCart = bottomNavigation.getOrCreateBadge(R.id.cartFragment).apply {
                 badgeGravity = BadgeDrawable.TOP_END
                 backgroundColor = getColor(R.color.yellow)
@@ -41,6 +44,11 @@ class DashBoardActivity : BaseActivity<ActivityDashBoardBinding>() {
                     R.id.orderFragment -> {
                         Log.d(TAG, "Click to here")
 //                        navController.navigate()
+                        closeDrawerAndHideBottomNav()
+                        true
+                    }
+                    R.id.profileFragment -> {
+                        navController.navigate(R.id.action_exploreFragment_to_profileFragment2)
                         closeDrawerAndHideBottomNav()
                         true
                     }
