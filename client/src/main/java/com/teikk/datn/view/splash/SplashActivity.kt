@@ -1,15 +1,9 @@
 package com.teikk.datn.view.splash
 
 import android.content.Intent
-import android.os.Bundle
-import android.util.Log
+import android.os.Looper
 import android.view.View
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.databinding.DataBindingUtil.setContentView
 import com.teikk.datn.R
 import com.teikk.datn.base.BaseActivity
 import com.teikk.datn.databinding.ActivitySplashBinding
@@ -30,9 +24,12 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                 binding.imageView.visibility = View.VISIBLE
             } else {
                 binding.imageView.visibility = View.GONE
-                startActivity(Intent(this, DashBoardActivity::class.java).apply {
+                val intent = Intent(this, if (viewModel.uid == "") AuthenticationActivity::class.java else DashBoardActivity::class.java ).apply {
                     flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                })
+                }
+                android.os.Handler(Looper.getMainLooper()).postDelayed({
+                    startActivity(intent)
+                }, 2000)
             }
         }
     }

@@ -18,7 +18,7 @@ abstract class BaseListAdapter<T : Any, VB : ViewDataBinding>(diffCallback: Diff
             .setBackgroundThreadExecutor(Executors.newSingleThreadExecutor())
             .build()
     ) {
-    var listener: ((s: String, item: T, position: Int) -> Unit)? = null
+    var listener: ((item: T, position: Int) -> Unit)? = null
     abstract fun getLayout(viewType: Int): Int
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = BaseViewHolder<VB>(
         DataBindingUtil.inflate(

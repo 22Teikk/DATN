@@ -42,18 +42,6 @@ class AuthenticationViewModel @Inject constructor(
     val user get() = _user
     private val _userSuccess = MutableLiveData<Resource<UserProfile>>()
     val userSuccess get() = _userSuccess
-    init {
-        fetchRoleData()
-    }
-
-    fun fetchRoleData() = viewModelScope.launch {
-        val response = roleRemoteRepository.getAllRoles()
-        if (response.isSuccessful) {
-            val roles = response.body()!!
-            Log.d(TAG, roles.toString())
-            roleLocalRepository.insertRoles(roles)
-        }
-    }
 
     fun signUpWithEmail(email: String, password: String, callback: (Boolean) -> Unit) {
         authenticationRepository.signUpWithEmail(email, password) {
