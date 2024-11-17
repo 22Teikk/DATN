@@ -1,14 +1,14 @@
-package com.teikk.datn.view.dashboard.fragment
+package com.teikk.datn.view.dashboard.fragment.order
 
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.teikk.datn.R
 import com.teikk.datn.base.BaseFragment
-import com.teikk.datn.databinding.FragmentPaymentMethodBinding
+import com.teikk.datn.databinding.FragmentUpcomingBinding
 
-class PaymentMethodFragment : BaseFragment<FragmentPaymentMethodBinding>() {
+class UpcomingFragment : BaseFragment<FragmentUpcomingBinding>() {
     override fun getLayoutResId(): Int {
-        return R.layout.fragment_payment_method
+        return R.layout.fragment_upcoming
     }
 
     override fun init() {

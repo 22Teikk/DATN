@@ -42,7 +42,7 @@ class DashBoardActivity : BaseActivity<ActivityDashBoardBinding>() {
             binding.navigationView.setNavigationItemSelectedListener { menuItem ->
                 when (menuItem.itemId) {
                     R.id.orderFragment -> {
-                        Log.d(TAG, "Click to here")
+                        navController.navigate(R.id.action_exploreFragment_to_orderFragment)
                         closeDrawerAndHideBottomNav()
                         true
                     }

@@ -22,5 +22,12 @@
         <item name="android:fontFamily">@font/sofia_semi_bold</item>
     </style>
 
+    <style name="tabTheme" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/orange</item>
+        <item name="tabIndicator">@drawable/tab_indicator_order</item>
+<!--        <item name="tabIndicatorFullWidth">true</item>-->
+<!--        <item name="tabIndicatorGravity">stretch</item>-->
+    </style>
+
     <style name="Theme.DATN" parent="Base.Theme.DATN" />
 </resources>
