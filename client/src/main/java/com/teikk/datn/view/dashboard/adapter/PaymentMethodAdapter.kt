@@ -1,6 +1,7 @@
 package com.teikk.datn.view.dashboard.adapter
 
 import androidx.recyclerview.widget.DiffUtil
+import com.bumptech.glide.Glide
 import com.teikk.datn.R
 import com.teikk.datn.base.BaseListAdapter
 import com.teikk.datn.data.model.PaymentMethod
@@ -30,6 +31,8 @@ class PaymentMethodAdapter: BaseListAdapter<PaymentMethod, ItemPaymentMethodBind
         with (holder.binding) {
             val paymentMethod = getItem(position)
             txtName.text = paymentMethod.name
+            Glide.with(root).load(paymentMethod.imageUrl).into(imgIcon)
+            rdSelect.isSelected = paymentMethod.isSelected
             root.setOnClickListener { listener?.invoke(paymentMethod, position) }
         }
     }

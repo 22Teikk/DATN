@@ -1,6 +1,8 @@
 package com.teikk.datn.utils
 
 import android.content.Context
+import android.location.Address
+import android.location.Geocoder
 import android.net.Uri
 import android.os.Environment
 import java.io.File
@@ -40,4 +42,29 @@ fun Context.createImageFile(): File {
         ".jpg", /* suffix */
         storageDir /* directory */
     )
+}
+
+fun Context.getAddressShareLocation(latitude: Double, longitude: Double): String {
+    val geocoder = Geocoder(this, Locale.getDefault())
+    var result = ""
+    try {
+        val addresses: List<Address> =
+            geocoder.getFromLocation(latitude, longitude, 1)!!.toMutableList()
+        if (addresses.isNotEmpty()) {
+            if (!addresses[0].subThoroughfare.isNullOrEmpty() && !addresses[0].thoroughfare.isNullOrEmpty())
+                result =
+                    "${addresses[0].subThoroughfare}, ${addresses[0].thoroughfare}, ${addresses[0].subAdminArea},${addresses[0].adminArea}"
+            else if (addresses[0].subThoroughfare.isNullOrEmpty() && !addresses[0].thoroughfare.isNullOrEmpty())
+                result =
+                    "${addresses[0].thoroughfare}, ${addresses[0].subAdminArea},${addresses[0].adminArea}"
+            else if (!addresses[0].subThoroughfare.isNullOrEmpty() && addresses[0].thoroughfare.isNullOrEmpty())
+                result =
+                    "${addresses[0].subThoroughfare}, ${addresses[0].subAdminArea},${addresses[0].adminArea}"
+            else result =
+                "${addresses[0].subAdminArea},${addresses[0].adminArea}"
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+    return result
 }

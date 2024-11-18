@@ -13,8 +13,8 @@ interface PaymentMethodDao {
     fun insertPaymentMethods(roles: List<PaymentMethod>)
 
     @Delete
-    fun delete(role: PaymentMethod)
+    fun delete(paymentMethod: PaymentMethod)
 
-    @Query("SELECT * FROM role_tables")
+    @Query("SELECT * FROM payment_method_table")
     fun getAllPaymentMethod(): List<PaymentMethod>
 }

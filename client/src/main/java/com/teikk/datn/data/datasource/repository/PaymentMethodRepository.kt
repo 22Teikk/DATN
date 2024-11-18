@@ -17,6 +17,7 @@ class PaymentMethodRepository @Inject constructor(
         val response = paymentMethodRemoteRepository.getAllPaymentMethods()
         if (response.isSuccessful) {
             val paymentMethods = response.body()!!
+            paymentMethods[0].isSelected = true
             paymentMethodLocalRepository.insertPaymentMethods(paymentMethods)
             _paymentMethodsLiveData.postValue(paymentMethods)
         }

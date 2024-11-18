@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teikk.datn.base.SharedPreferenceUtils
 import com.teikk.datn.data.datasource.repository.CategoryRepository
+import com.teikk.datn.data.datasource.repository.PaymentMethodRepository
 import com.teikk.datn.data.datasource.repository.UserProfileRepository
 import com.teikk.datn.data.model.UserProfile
 import com.teikk.datn.data.service.socket.SocketManager
@@ -20,8 +21,11 @@ class DashBoardViewModel @Inject constructor(
     private val categoryRepository: CategoryRepository,
     private val socket: SocketManager,
     private val sharedPreferenceUtils: SharedPreferenceUtils,
-    private val userProfileRepository: UserProfileRepository
+    private val userProfileRepository: UserProfileRepository,
+    private val paymentMethodRepository: PaymentMethodRepository
 ) : ViewModel(){
+    private val _paymentMethod = paymentMethodRepository.paymentMethodsLiveData
+    val paymentMethod get() = _paymentMethod
     private val _category = categoryRepository.categoriesLiveData
     val category get() = _category
     private val _user = MutableLiveData<UserProfile>()
@@ -31,6 +35,7 @@ class DashBoardViewModel @Inject constructor(
     }
     init {
         viewModelScope.launch(Dispatchers.IO) {
+            paymentMethodRepository.fetchPaymentMethodData()
             _user.postValue(userProfileRepository.getUserProfileByID(uid))
         }
         socket.socketConnect()
