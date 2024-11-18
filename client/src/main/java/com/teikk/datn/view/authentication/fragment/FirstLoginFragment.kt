@@ -12,6 +12,7 @@ import com.teikk.datn.R
 import com.teikk.datn.base.BaseFragment
 import com.teikk.datn.base.setSafeOnClickListener
 import com.teikk.datn.base.showShortToast
+import com.teikk.datn.data.model.Singleton
 import com.teikk.datn.databinding.FragmentFirstLoginBinding
 import com.teikk.datn.utils.Resource
 import com.teikk.datn.utils.uriToFile
@@ -57,6 +58,7 @@ class FirstLoginFragment : BaseFragment<FragmentFirstLoginBinding>() {
                     address = edtAddress.text.toString(),
                     imageUrl = imgUrl
                 )
+                Singleton.user = user
                 viewModel.updateUser(user)
             }
         }

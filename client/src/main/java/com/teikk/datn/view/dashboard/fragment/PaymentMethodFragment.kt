@@ -39,9 +39,6 @@ class PaymentMethodFragment : BaseFragment<FragmentPaymentMethodBinding>() {
             Log.d("klajsflkdsjfklasdf", it.toString())
             adapter.submitList(it)
         }
-        viewModel.user.observe(viewLifecycleOwner) {
-            Log.d("klajsflkdsjfklasdf", it.toString())
-        }
     }
 
     override val onBackPressedCallback: OnBackPressedCallback
