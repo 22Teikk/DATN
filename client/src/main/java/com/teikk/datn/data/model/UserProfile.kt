@@ -24,7 +24,7 @@ data class UserProfile(
     var password: String = "",
     var phone: String = "",
     @SerializedName("role_id")
-    var roleId: String = "f9243592-e464-4f52-a849-9938000d2f47",
+    var roleId: String = "2",
     @SerializedName("store_id")
     var storeId: String? = null,
     var username: String = ""

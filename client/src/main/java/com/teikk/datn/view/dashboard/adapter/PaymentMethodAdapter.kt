@@ -7,7 +7,7 @@ import com.teikk.datn.base.BaseListAdapter
 import com.teikk.datn.data.model.PaymentMethod
 import com.teikk.datn.databinding.ItemPaymentMethodBinding
 
-class PaymentMethodAdapter: BaseListAdapter<PaymentMethod, ItemPaymentMethodBinding>(LIST_PAYMENT_METHOD_DIFF_CALLBACK) {
+class PaymentMethodAdapter(var paymentMethodID: String): BaseListAdapter<PaymentMethod, ItemPaymentMethodBinding>(LIST_PAYMENT_METHOD_DIFF_CALLBACK) {
     companion object {
         val LIST_PAYMENT_METHOD_DIFF_CALLBACK = object : DiffUtil.ItemCallback<PaymentMethod>() {
             override fun areItemsTheSame(oldItem: PaymentMethod, newItem: PaymentMethod): Boolean {
@@ -32,8 +32,13 @@ class PaymentMethodAdapter: BaseListAdapter<PaymentMethod, ItemPaymentMethodBind
             val paymentMethod = getItem(position)
             txtName.text = paymentMethod.name
             Glide.with(root).load(paymentMethod.imageUrl).into(imgIcon)
-            rdSelect.isSelected = paymentMethod.isSelected
-            root.setOnClickListener { listener?.invoke(paymentMethod, position) }
+            rdSelect.isChecked = paymentMethod.id == paymentMethodID
+            rdSelect.setOnCheckedChangeListener { _, checked ->
+                if (checked) {
+                    paymentMethodID = paymentMethod.id
+                    listener?.invoke(paymentMethod, position)
+                }
+            }
         }
     }
 

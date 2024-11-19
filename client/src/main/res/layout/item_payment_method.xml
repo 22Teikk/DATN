@@ -11,6 +11,7 @@
         android:id="@+id/imgIcon"/>
 
     <TextView
+        android:layout_marginHorizontal="@dimen/_10sdp"
         android:id="@+id/txtName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

@@ -26,7 +26,7 @@ import javax.inject.Inject
 class DashBoardViewModel @Inject constructor(
     private val categoryRepository: CategoryRepository,
     private val socket: SocketManager,
-    private val sharedPreferenceUtils: SharedPreferenceUtils,
+    val sharedPreferenceUtils: SharedPreferenceUtils,
     private val userProfileRepository: UserProfileRepository,
     private val paymentMethodRepository: PaymentMethodRepository,
     private val uploadFileRepository: UploadFileRepository
