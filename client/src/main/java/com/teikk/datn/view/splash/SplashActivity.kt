@@ -23,7 +23,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
             if (it) {
                 binding.imageView.visibility = View.VISIBLE
             } else {
-                binding.imageView.visibility = View.GONE
+                binding.imageView.visibility = View.VISIBLE
                 val intent = Intent(this, if (viewModel.uid == "") AuthenticationActivity::class.java else DashBoardActivity::class.java ).apply {
                     flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 }

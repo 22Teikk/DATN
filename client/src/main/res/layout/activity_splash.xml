@@ -6,22 +6,22 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
+        android:background="@color/orange"
         android:layout_height="match_parent"
         tools:context=".view.splash.SplashActivity">
 
-
-        <TextView
-            android:text="asjhdfjksdhf"
-            android:textSize="30sp"
+        <ImageView
             android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_150sdp"
+            android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
+            android:background="@android:color/transparent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
-            app:tint="@color/black" />
+            android:src="@drawable/app_icon" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
