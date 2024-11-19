@@ -1,6 +1,7 @@
 package com.teikk.datn.view.dashboard.fragment
 
 import android.content.Intent
+import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
@@ -38,12 +39,14 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
             viewModel.user.observe(viewLifecycleOwner) { it ->
                 when (it) {
                     is Resource.Loading -> {
-                        // show loading
+                        ctnLoading.visibility = View.VISIBLE
                     }
                     is Resource.Error -> {
+                        ctnLoading.visibility = View.GONE
                         Toast.makeText(requireContext(), "Something error", Toast.LENGTH_SHORT).show()
                     }
                     is Resource.Success -> {
+                        ctnLoading.visibility = View.GONE
                         edtEmail.setText(it.data!!.email)
                         edtUserName.setText(it.data.username)
                         edtPhoneNumber.setText(it.data.phone)
@@ -72,10 +75,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                     viewModel.uploadFile(avatarFile!!) {
                         if (it != null) {
                             user.imageUrl = it
+                            viewModel.updateUser(user)
                         }
                     }
+                } else {
+                    viewModel.updateUser(user)
                 }
-                viewModel.updateUser(user)
             }
         }
     }
