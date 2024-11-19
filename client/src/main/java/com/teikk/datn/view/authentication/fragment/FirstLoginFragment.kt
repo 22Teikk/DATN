@@ -34,7 +34,7 @@ class FirstLoginFragment : BaseFragment<FragmentFirstLoginBinding>() {
 
     override fun initEvent() {
         with(binding) {
-            btnSelectImage.setSafeOnClickListener {
+            imgEditAvatar.setSafeOnClickListener {
                 val intent = Intent().apply {
                     type = "image/*"
                     action = Intent.ACTION_GET_CONTENT

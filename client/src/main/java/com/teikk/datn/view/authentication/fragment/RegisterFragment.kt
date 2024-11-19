@@ -25,9 +25,12 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
 
     override fun initEvent() {
         with(binding) {
+            btnBack.setOnClickListener {
+                findNavController().navigateUp()
+            }
             btnRegister.setOnClickListener {
-                val userName = "test13@gmail.com"
-                val password = "123456"
+                val userName = edtEmail.text.toString()
+                val password = edtPassword.text.toString()
                 viewModel.register(email = userName, password = password) {
                     if (it) {
                         val direction = RegisterFragmentDirections.actionRegisterFragmentToLoginFragment(userName, password)
@@ -37,13 +40,16 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
                     }
                 }
             }
+            btnLogin.setOnClickListener {
+                findNavController().navigateUp()
+            }
         }
     }
 
     override val onBackPressedCallback: OnBackPressedCallback
-        get() = object : OnBackPressedCallback(false) {
+        get() = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-
+                findNavController().navigateUp()
             }
         }
 }

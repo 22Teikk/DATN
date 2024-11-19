@@ -3,7 +3,7 @@
     <style name="Base.Theme.DATN" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
          <item name="colorPrimary">@color/orange</item>
-        <item name="android:background">@color/white</item>
+<!--        <item name="android:background">@color/white</item>-->
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
         <item name="android:buttonStyle">@style/RobotoButtonStyle</item>

@@ -72,7 +72,7 @@ class AuthenticationViewModel @Inject constructor(
 
     fun login(email: String, password: String) = viewModelScope.launch(Dispatchers.IO) {
         _user.postValue(Resource.Loading())
-        val userProfile = UserProfile(password = password, username = email)
+        val userProfile = UserProfile(password = password, username = email, name = email)
         val response = authRepository.login(userProfile)
         if (response.isSuccessful) {
             val jsonObject = response.body()
