@@ -2,6 +2,8 @@ package com.teikk.datn.view.dashboard.fragment
 
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.teikk.datn.R
 import com.teikk.datn.base.BaseFragment
 import com.teikk.datn.base.setSafeOnClickListener
@@ -24,6 +26,14 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
         with (binding) {
             btnMenu.setSafeOnClickListener {
                 (requireActivity() as DashBoardActivity).openDrawer()
+            }
+        }
+    }
+
+    override fun initObserver() {
+        with(binding) {
+            viewModel.user.observe(viewLifecycleOwner) {
+                Glide.with(root).load(it.data?.imageUrl).into(imgAvatar)
             }
         }
     }

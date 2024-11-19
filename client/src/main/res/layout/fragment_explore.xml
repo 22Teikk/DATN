@@ -69,7 +69,7 @@
                     android:layout_height="match_parent"
                     android:src="@drawable/test"
                     android:scaleType="centerCrop"
-                    android:id="@+id/encrypted" />
+                    android:id="@+id/imgAvatar" />
             </androidx.cardview.widget.CardView>
         </LinearLayout>
 

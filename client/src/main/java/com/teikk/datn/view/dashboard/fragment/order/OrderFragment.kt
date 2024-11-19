@@ -2,15 +2,20 @@ package com.teikk.datn.view.dashboard.fragment.order
 
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import com.teikk.datn.R
 import com.teikk.datn.base.BaseFragment
 import com.teikk.datn.databinding.FragmentOrderBinding
+import com.teikk.datn.view.dashboard.DashBoardViewModel
 import com.teikk.datn.view.dashboard.adapter.OrderViewPagerAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OrderFragment : BaseFragment<FragmentOrderBinding>() {
+    private val viewModel by activityViewModels<DashBoardViewModel>()
     override fun getLayoutResId(): Int {
         return R.layout.fragment_order
     }
@@ -29,6 +34,23 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>() {
                     1 -> tab.text = "History"
                 }
             }.attach()
+        }
+    }
+
+    override fun initEvent() {
+        with(binding) {
+            btnBack.setOnClickListener {
+                findNavController().navigateUp()
+            }
+        }
+    }
+
+    override fun initObserver() {
+        with (binding) {
+            viewModel.user.observe(viewLifecycleOwner) {
+                Glide.with(root).load(it.data?.imageUrl).into(imgAvatar)
+
+            }
         }
     }
 

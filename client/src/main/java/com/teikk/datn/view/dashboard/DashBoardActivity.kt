@@ -3,12 +3,14 @@ package com.teikk.datn.view.dashboard
 import android.content.Intent
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
 import com.google.android.material.badge.BadgeDrawable
 import com.teikk.datn.R
 import com.teikk.datn.base.BaseActivity
@@ -82,6 +84,14 @@ class DashBoardActivity : BaseActivity<ActivityDashBoardBinding>() {
     }
 
     override fun initObserve() {
+        with (binding) {
+            viewModel.user.observe(this@DashBoardActivity) {
+                navigationView.findViewById<TextView>(R.id.txtName).setText(it.data?.name)
+                navigationView.findViewById<TextView>(R.id.txtEmail).setText(it.data?.email)
+                Glide.with(root).load(it.data?.imageUrl).into(navigationView.findViewById(R.id.nav_header_imageView))
+
+            }
+        }
         badgeCart.number = 20
         badgeNotification.isVisible = true
     }

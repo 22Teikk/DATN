@@ -50,6 +50,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                         edtEmail.setText(it.data!!.email)
                         edtUserName.setText(it.data.username)
                         edtPhoneNumber.setText(it.data.phone)
+                        txtName.setText(it.data.name)
                         Glide.with(binding.root).load(it.data.imageUrl).error(R.drawable.icon_profile).into(imgAvatar)
                         user = it.data
                     }
