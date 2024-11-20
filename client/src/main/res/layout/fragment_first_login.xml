@@ -64,28 +64,6 @@
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Address:"
-        android:textColor="@color/grey"
-        android:textSize="@dimen/_13ssp"/>
-
-    <EditText
-        android:id="@+id/edtAddress"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:padding="@dimen/_5sdp"
-        android:hint="Address"
-        android:inputType="textPostalAddress"
-        android:textColor="@color/black"
-        android:fontFamily="@font/sofia_regular"
-        android:textSize="@dimen/_15ssp"
-        android:background="@drawable/background_edittext"/>
-
-    <TextView
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_5sdp"
-        android:layout_marginStart="@dimen/_5sdp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="Phone Number:"
         android:textColor="@color/grey"
         android:textSize="@dimen/_13ssp"/>

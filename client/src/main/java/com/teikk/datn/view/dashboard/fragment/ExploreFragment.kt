@@ -34,6 +34,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
         with(binding) {
             viewModel.user.observe(viewLifecycleOwner) {
                 Glide.with(root).load(it.data?.imageUrl).into(imgAvatar)
+                txtAddress.text = it.data?.address
             }
         }
     }
