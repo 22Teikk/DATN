@@ -40,7 +40,6 @@ class SplashViewModel @Inject constructor(
         roleRepository.fetchRoleData()
         categoryRepository.fetchCategoryData()
         paymentMethodRepository.fetchPaymentMethodData()
-        sharedPreferences.putBooleanValue("isFirstTime", false)
-        _isFirstTime.postValue(false)
+        _isFirstTime.postValue(true)
     }
 }

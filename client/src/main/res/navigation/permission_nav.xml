@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/permission_nav.xml"
+    app:startDestination="@id/permissionNotiFragment">
+
+    <fragment
+        android:id="@+id/permissionNotiFragment"
+        android:name="com.teikk.datn.view.permission.fragment.PermissionNotiFragment"
+        android:label="PermissionNotiFragment" >
+        <action
+            app:popUpTo="@+id/permissionNotiFragment"
+            app:popUpToInclusive="true"
+            android:id="@+id/action_permissionNotiFragment_to_permissionLocationFragment"
+            app:destination="@id/permissionLocationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/permissionBackgroundFragment"
+        android:name="com.teikk.datn.view.permission.fragment.PermissionBackgroundFragment"
+        android:label="PermissionBackgroundFragment" />
+    <fragment
+        android:id="@+id/permissionBatteryFragment"
+        android:name="com.teikk.datn.view.permission.fragment.PermissionBatteryFragment"
+        android:label="PermissionBatteryFragment" >
+        <action
+            app:popUpTo="@+id/permissionBatteryFragment"
+            app:popUpToInclusive="true"
+            android:id="@+id/action_permissionBatteryFragment_to_permissionBackgroundFragment"
+            app:destination="@id/permissionBackgroundFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/permissionLocationFragment"
+        android:name="com.teikk.datn.view.permission.fragment.PermissionLocationFragment"
+        android:label="PermissionLocationFragment" >
+        <action
+            app:popUpTo="@+id/permissionLocationFragment"
+            app:popUpToInclusive="true"
+            android:id="@+id/action_permissionLocationFragment_to_permissionBatteryFragment"
+            app:destination="@id/permissionBatteryFragment" />
+    </fragment>
+</navigation>
