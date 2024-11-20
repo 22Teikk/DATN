@@ -10,7 +10,6 @@ import androidx.navigation.fragment.navArgs
 import com.teikk.datn.R
 import com.teikk.datn.base.BaseFragment
 import com.teikk.datn.base.showShortToast
-import com.teikk.datn.data.model.Singleton
 import com.teikk.datn.databinding.FragmentLoginBinding
 import com.teikk.datn.utils.Resource
 import com.teikk.datn.view.authentication.AuthenticationViewModel
@@ -54,7 +53,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                         Log.d("sdljkfhasdfjkl", it.data.address)
                         Log.d("sdljkfhasdfjkl", it.data.address.isNotBlank().toString())
                         Log.d("sdljkfhasdfjkl", it.data.address.isNotEmpty().toString())
-                        Singleton.user = it.data
                         openActivity(DashBoardActivity::class.java, isClearBackStack = true)
                     } else {
                         findNavController().navigate(R.id.action_loginFragment_to_firstLoginFragment)

@@ -94,7 +94,7 @@ class AuthenticationViewModel @Inject constructor(
         _userSuccess.postValue(Resource.Loading())
         try {
             val responseRemote = async {  userProfileRepository.saveUserToRemote(user) }
-            val responseLocal = async {  userProfileRepository.saveUserToLocal(user) }
+            val responseLocal = async {  userProfileRepository.insertUserProfile(user) }
             awaitAll(responseRemote, responseLocal)
             _userSuccess.postValue(Resource.Success(user))
         } catch (e: Exception) {

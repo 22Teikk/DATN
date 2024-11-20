@@ -85,7 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:padding="@dimen/_5sdp"
-            android:inputType="textVisiblePassword"
+            android:inputType="textPassword"
             android:textColor="@color/black"
             android:fontFamily="@font/sofia_regular"
             android:textSize="@dimen/_15ssp"

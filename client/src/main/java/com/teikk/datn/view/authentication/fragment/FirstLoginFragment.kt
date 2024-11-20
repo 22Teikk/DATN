@@ -1,28 +1,24 @@
 package com.teikk.datn.view.authentication.fragment
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.location.Location
 import android.net.Uri
 import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.teikk.datn.R
 import com.teikk.datn.base.BaseFragment
 import com.teikk.datn.base.setSafeOnClickListener
 import com.teikk.datn.base.showShortToast
-import com.teikk.datn.data.model.Singleton
 import com.teikk.datn.databinding.FragmentFirstLoginBinding
 import com.teikk.datn.utils.Resource
-import com.teikk.datn.utils.getAddressShareLocation
+import com.teikk.datn.utils.getAddressByLocation
 import com.teikk.datn.utils.uriToFile
 import com.teikk.datn.view.authentication.AuthenticationViewModel
 import com.teikk.datn.view.dashboard.DashBoardActivity
@@ -66,26 +62,34 @@ class FirstLoginFragment : BaseFragment<FragmentFirstLoginBinding>() {
                 arlBackground.launch(intent)
             }
             btnCreate.setSafeOnClickListener {
-                var imgUrl = ""
-                imgUri?.let {
-                    requireContext().uriToFile(it)?.let { it1 ->
+                if (imgUri != null) {
+                    requireContext().uriToFile(imgUri!!)?.let { it1 ->
                         viewModel.uploadFile(it1) { url ->
                             if (url != null) {
-                                imgUrl = url
+                                val user = viewModel.user.value!!.data!!.copy(
+                                    name = edtName.text.toString(),
+                                    phone = edtPhone.text.toString(),
+                                    lat = lat,
+                                    long = long,
+                                    address = requireContext().getAddressByLocation(lat, long),
+                                    imageUrl = url
+                                )
+                                viewModel.updateUser(user)
                             }
                         }
                     }
+                } else {
+                    Log.d("swlkdjfglksdjfgklsjdfkl", long.toString())
+                    val user = viewModel.user.value!!.data!!.copy(
+                        name = edtName.text.toString(),
+                        phone = edtPhone.text.toString(),
+                        lat = lat,
+                        long = long,
+                        address = requireContext().getAddressByLocation(lat, long),
+                    )
+                    Log.d("swlkdjfglksdjfgklsjdfkl", user.toString())
+                    viewModel.updateUser(user)
                 }
-                val user = viewModel.user.value!!.data!!.copy(
-                    name = edtName.text.toString(),
-                    phone = edtPhone.text.toString(),
-                    lat = lat,
-                    long = long,
-                    address = requireContext().getAddressShareLocation(lat, long),
-                    imageUrl = imgUrl
-                )
-                Singleton.user = user
-                viewModel.updateUser(user)
             }
         }
     }
@@ -113,6 +117,7 @@ class FirstLoginFragment : BaseFragment<FragmentFirstLoginBinding>() {
                 val data = result.data
                 if (data != null) {
                     imgUri = data.data
+                    Glide.with(this).load(imgUri).into(binding.imgAvatar)
                 }
             }
         }

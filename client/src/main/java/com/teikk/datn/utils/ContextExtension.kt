@@ -44,24 +44,15 @@ fun Context.createImageFile(): File {
     )
 }
 
-fun Context.getAddressShareLocation(latitude: Double, longitude: Double): String {
+fun Context.getAddressByLocation(latitude: Double, longitude: Double): String {
     val geocoder = Geocoder(this, Locale.getDefault())
     var result = ""
     try {
         val addresses: List<Address> =
             geocoder.getFromLocation(latitude, longitude, 1)!!.toMutableList()
         if (addresses.isNotEmpty()) {
-            if (!addresses[0].subThoroughfare.isNullOrEmpty() && !addresses[0].thoroughfare.isNullOrEmpty())
-                result =
-                    "${addresses[0].subThoroughfare}, ${addresses[0].thoroughfare}, ${addresses[0].subAdminArea},${addresses[0].adminArea}"
-            else if (addresses[0].subThoroughfare.isNullOrEmpty() && !addresses[0].thoroughfare.isNullOrEmpty())
-                result =
-                    "${addresses[0].thoroughfare}, ${addresses[0].subAdminArea},${addresses[0].adminArea}"
-            else if (!addresses[0].subThoroughfare.isNullOrEmpty() && addresses[0].thoroughfare.isNullOrEmpty())
-                result =
-                    "${addresses[0].subThoroughfare}, ${addresses[0].subAdminArea},${addresses[0].adminArea}"
-            else result =
-                "${addresses[0].subAdminArea},${addresses[0].adminArea}"
+            result =
+                "${addresses[0].subAdminArea}, ${addresses[0].adminArea}, ${addresses[0].countryName}"
         }
     } catch (e: Exception) {
         e.printStackTrace()

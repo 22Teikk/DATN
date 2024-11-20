@@ -1,6 +1,7 @@
 package com.teikk.datn.data.model
 
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.teikk.datn.utils.DateTimeConstant
@@ -18,8 +19,8 @@ data class UserProfile(
     var email: String = "",
     @SerializedName("image_url")
     var imageUrl: String? = null,
-    var lat: Double? = null,
-    var long: Double? = null,
+    var lat: Double = 0.0,
+    var long: Double = 0.0,
     var name: String = "",
     var password: String = "",
     var phone: String = "",

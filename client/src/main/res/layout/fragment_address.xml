@@ -73,7 +73,7 @@
                     <EditText
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/_30sdp"
                         android:background="@null"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="@dimen/_10sdp"
@@ -109,6 +109,7 @@
             android:layout_marginStart="@dimen/_20sdp"/>
 
         <EditText
+            android:enabled="false"
             android:id="@+id/edtAddress"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginHorizontal="@dimen/_20sdp"
