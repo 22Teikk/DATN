@@ -140,7 +140,7 @@
             android:id="@+id/txtCategory"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:textSize="@dimen/_18ssp"
-            android:text="Category"/>
+            android:text="Products"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"

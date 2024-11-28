@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.teikk.datn.base.SharedPreferenceUtils
 import com.teikk.datn.data.datasource.repository.CategoryRepository
 import com.teikk.datn.data.datasource.repository.PaymentMethodRepository
+import com.teikk.datn.data.datasource.repository.ProductRepository
 import com.teikk.datn.data.datasource.repository.UploadFileRepository
 import com.teikk.datn.data.datasource.repository.UserProfileRepository
 import com.teikk.datn.data.model.UserProfile
@@ -29,14 +30,18 @@ class DashBoardViewModel @Inject constructor(
     val sharedPreferenceUtils: SharedPreferenceUtils,
     private val userProfileRepository: UserProfileRepository,
     private val paymentMethodRepository: PaymentMethodRepository,
-    private val uploadFileRepository: UploadFileRepository
+    private val uploadFileRepository: UploadFileRepository,
+    private val productRepository: ProductRepository
 ) : ViewModel(){
     private val _paymentMethod = paymentMethodRepository.paymentMethodsLiveData
     val paymentMethod get() = _paymentMethod
     private val _category = categoryRepository.categoriesLiveData
     val category get() = _category
     private val _user = MutableLiveData<Resource<UserProfile>>()
+    private val _products = productRepository.products
+    val products get() = _products
     val user get() = _user
+
     private val uid: String by lazy {
         sharedPreferenceUtils.getStringValue(UID, "")
     }
@@ -45,12 +50,15 @@ class DashBoardViewModel @Inject constructor(
             paymentMethodRepository.fetchPaymentMethodData()
             _user.postValue(Resource.Success(userProfileRepository.getUserProfileByID(uid)))
         }
+        fetchProductData()
         socket.socketConnect()
     }
 
     fun connectSocket() {
         socket.socketConnect()
     }
+
+    // User
 
     fun logout(logoutSuccess : () -> Unit)  {
         ShareConstant.removeToken(sharedPreferenceUtils)
@@ -73,6 +81,15 @@ class DashBoardViewModel @Inject constructor(
         }
     }
 
+    //User
+
+
+    // Product
+    private fun fetchProductData() = viewModelScope.launch(Dispatchers.IO) {
+        productRepository.fetchProductRemote()
+    }
+
+    // Product
     fun uploadFile(file: File, callback: (String?) -> Unit) = viewModelScope.launch(Dispatchers.IO) {
         val result = uploadFileRepository.uploadFile(file)
         withContext(Dispatchers.Main) {

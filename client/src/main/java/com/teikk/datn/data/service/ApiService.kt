@@ -3,6 +3,7 @@ package com.teikk.datn.data.service
 import com.google.gson.JsonObject
 import com.teikk.datn.data.model.Category
 import com.teikk.datn.data.model.PaymentMethod
+import com.teikk.datn.data.model.Product
 import com.teikk.datn.data.model.Role
 import com.teikk.datn.data.model.UserProfile
 import okhttp3.MultipartBody
@@ -47,6 +48,8 @@ interface ApiService {
     // User Profile
 
     // Product API
+    @GET("api/v1/products")
+    suspend fun getAllProducts(@HeaderMap adminHeaders: Map<String, String>): Response<List<Product>>
     // Product API
 
 }

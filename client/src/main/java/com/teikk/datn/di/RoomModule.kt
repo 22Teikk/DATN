@@ -4,6 +4,7 @@ import android.content.Context
 import com.teikk.datn.data.service.DatabaseApp
 import com.teikk.datn.data.service.dao.CategoryDao
 import com.teikk.datn.data.service.dao.PaymentMethodDao
+import com.teikk.datn.data.service.dao.ProductDao
 import com.teikk.datn.data.service.dao.RoleDao
 import com.teikk.datn.data.service.dao.UserProfileDao
 import dagger.Module
@@ -45,5 +46,11 @@ object RoomModule {
     @Provides
     fun provideUserProfileDao(databaseApp: DatabaseApp) : UserProfileDao {
         return databaseApp.userProfileDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideProductDao(databaseApp: DatabaseApp) : ProductDao {
+        return databaseApp.productDao()
     }
 }
