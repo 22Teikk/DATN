@@ -17,8 +17,7 @@
         android:layout_marginTop="@dimen/_20sdp"
         android:id="@+id/nav_header_imageView"
         android:layout_width="@dimen/_80sdp"
-        android:layout_height="@dimen/_80sdp"
-        android:src="@drawable/test" />
+        android:layout_height="@dimen/_80sdp"/>
 
     <TextView
         android:layout_marginTop="@dimen/_5sdp"

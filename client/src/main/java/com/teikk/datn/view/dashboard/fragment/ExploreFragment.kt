@@ -9,11 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.teikk.datn.R
 import com.teikk.datn.base.BaseFragment
+import com.teikk.datn.base.GridSpacingItemDecoration
 import com.teikk.datn.base.setSafeOnClickListener
 import com.teikk.datn.databinding.FragmentExploreBinding
 import com.teikk.datn.view.dashboard.DashBoardActivity
 import com.teikk.datn.view.dashboard.DashBoardViewModel
 import com.teikk.datn.view.dashboard.adapter.CategoryAdapter
+import com.teikk.datn.view.dashboard.adapter.ProductAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
@@ -25,6 +27,9 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
     private val categoryAdapter by lazy {
         CategoryAdapter()
     }
+    private val productAdapter by lazy {
+        ProductAdapter()
+    }
     override fun getLayoutResId(): Int {
         return R.layout.fragment_explore
     }
@@ -35,6 +40,12 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
                 adapter = categoryAdapter
+            }
+            rcvProduct.apply {
+                setHasFixedSize(true)
+                layoutManager = androidx.recyclerview.widget.GridLayoutManager(requireContext(), 2)
+                addItemDecoration(GridSpacingItemDecoration(2, 15, includeEdge = true))
+                adapter = productAdapter
             }
         }
     }
@@ -54,7 +65,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
                         it.categoryId == categoryAdapter.currentList[categoryAdapter.selectedPosition].id
                     }
                 }.collectLatest { products ->
-                    Log.d("sdjfkhdsjkfd", products.size.toString())
+                    productAdapter.submitList(products)
                 }
             }
         }
@@ -68,14 +79,16 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
             }
             viewModel.category.observe(viewLifecycleOwner) {
                 categoryAdapter.submitList(it)
-            }
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.products.map {
-                    it.filter {
-                        it.categoryId == categoryAdapter.currentList[categoryAdapter.selectedPosition].id
+                if (it.isNotEmpty()) {
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        viewModel.products.map {
+                            it.filter {
+                                it.categoryId == categoryAdapter.currentList[categoryAdapter.selectedPosition].id
+                            }
+                        }.collectLatest { products ->
+                            productAdapter.submitList(products)
+                        }
                     }
-                }.collectLatest { products ->
-                    Log.d("sdjfkhdsjkfd", products.size.toString())
                 }
             }
         }

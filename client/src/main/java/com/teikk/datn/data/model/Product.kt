@@ -16,8 +16,11 @@ data class Product(
     var quantity: Int,
     @SerializedName("is_sold")
     var isSold: Boolean,
+    @SerializedName("total_time")
+    var totalTime: Int,
     @SerializedName("category_id")
     var categoryId: String,
+    var thumbnail: String,
     @SerializedName("discount_id")
     var discountId: String? = null,
 )
