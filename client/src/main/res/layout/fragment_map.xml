@@ -1,8 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
+    android:layout_marginHorizontal="@dimen/_10sdp"
     android:layout_height="match_parent">
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="@dimen/_20sdp"
+        android:layout_width="match_parent"
+        android:minHeight="@dimen/_200sdp"
+        android:layout_height="@dimen/_200sdp"
+        android:layout_margin="@dimen/_10sdp"
+        android:foregroundGravity="center">
+        <ImageView
+            android:id="@+id/imgStore"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:scaleType="fitXY"
+            android:foregroundGravity="center"
+            android:layout_height="match_parent"
+            />
+        
+    </androidx.cardview.widget.CardView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtName"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/_18ssp"
+        android:textColor="@color/orange"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtAddress"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/_16ssp"
+        android:textColor="@color/orange"
+        android:textStyle="italic"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtDescription"
+        android:layout_marginVertical="@dimen/_10sdp"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/_16ssp"
+        android:textColor="@color/grey"
+        android:textStyle="italic"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/icon_time"/>
+        <TextView
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:id="@+id/txtTime"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email:"
+        android:textColor="@color/grey"
+        android:textSize="@dimen/_13ssp"/>
+
+    <EditText
+        android:id="@+id/edtEmail"
+        android:enabled="false"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:padding="@dimen/_5sdp"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/black"
+        android:fontFamily="@font/sofia_regular"
+        android:textSize="@dimen/_15ssp"
+        android:background="@drawable/background_edittext"/>
+
+    <TextView
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phone Number:"
+        android:textColor="@color/grey"
+        android:textSize="@dimen/_13ssp"/>
+
+    <EditText
+        android:id="@+id/edtPhone"
+        android:enabled="false"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:padding="@dimen/_5sdp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/sofia_regular"
+        android:textSize="@dimen/_15ssp"
+        android:background="@drawable/background_edittext"/>
+
+    <Button
+        android:id="@+id/btnCall"
+        android:layout_marginVertical="@dimen/_10sdp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:text="Call Now"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</LinearLayout>
 </layout>

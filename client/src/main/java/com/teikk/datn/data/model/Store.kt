@@ -18,7 +18,7 @@ data class Store(
     var openTime: String,
     @SerializedName("close_time")
     var closeTime: String,
-    @SerializedName("image_url")
+    @SerializedName("image_src")
     var imageUrl: String,
     var phone: String,
     @SerializedName("open_day")

@@ -5,6 +5,7 @@ import com.teikk.datn.data.model.Category
 import com.teikk.datn.data.model.PaymentMethod
 import com.teikk.datn.data.model.Product
 import com.teikk.datn.data.model.Role
+import com.teikk.datn.data.model.Store
 import com.teikk.datn.data.model.UserProfile
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -42,6 +43,8 @@ interface ApiService {
     @GET("api/v1/categories")
     suspend fun getAllCategories(@HeaderMap adminHeaders: Map<String, String>): Response<List<Category>>
 
+    @GET("api/v1/stores/77c611bd-9195-4d54-a48c-a526e16c31df")
+    suspend fun getStoreByID() : Response<Store>
     // User Profile
     @PUT("api/v1/user_profiles/{id}")
     suspend fun updateUserProfile(@HeaderMap adminHeaders: Map<String, String> ,@Path("id") id: String,@Body userProfile: UserProfile) : Response<UserProfile>

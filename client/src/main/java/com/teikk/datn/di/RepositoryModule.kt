@@ -14,7 +14,9 @@ import com.teikk.datn.data.datasource.repository.CategoryRepository
 import com.teikk.datn.data.datasource.repository.PaymentMethodRepository
 import com.teikk.datn.data.datasource.repository.ProductRepository
 import com.teikk.datn.data.datasource.repository.RoleRepository
+import com.teikk.datn.data.datasource.repository.SummaryRepository
 import com.teikk.datn.data.datasource.repository.UserProfileRepository
+import com.teikk.datn.data.service.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,4 +46,8 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideProductRepository(remoteRepository: ProductRemoteRepository, localRepository: ProductLocalRepository) = ProductRepository(remoteRepository, localRepository)
+
+    @Provides
+    @Singleton
+    fun provideSummaryRepository(apiService: ApiService) = SummaryRepository(apiService)
 }
