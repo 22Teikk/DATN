@@ -11,4 +11,5 @@ class CartRemoteRepository @Inject constructor(
     suspend fun addToCart(wishlist: Cart) = apiService.addToCart(wishlist)
     suspend fun deleteFromList(id: String) = apiService.deleteFromCart(id)
     suspend fun updateCart(cart: Cart) = apiService.updateCart(cart.id, cart)
+    suspend fun updateManyCarts(carts: List<Cart>) = apiService.updateManyCarts(carts)
 }

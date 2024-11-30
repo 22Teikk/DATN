@@ -159,6 +159,10 @@ class DashBoardViewModel @Inject constructor(
     fun deleteCart(cart: Cart) = viewModelScope.launch(Dispatchers.IO) {
         cartRepository.deleteCart(cart)
     }
+
+    fun updateManyCarts(carts: List<Cart>) = viewModelScope.launch(Dispatchers.IO) {
+        cartRepository.updateManyCarts(carts)
+    }
     // Cart
 
 }

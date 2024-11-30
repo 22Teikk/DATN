@@ -62,4 +62,9 @@ class CartRepository @Inject constructor(
         cartLocalRepository.insertCarts(listOf(cart))
         cartRemoteRepository.updateCart(cart)
     }
+
+    fun updateManyCarts(carts: List<Cart>) = CoroutineScope(Dispatchers.IO).launch {
+        cartLocalRepository.insertCarts(carts)
+        cartRemoteRepository.updateManyCarts(carts)
+    }
 }

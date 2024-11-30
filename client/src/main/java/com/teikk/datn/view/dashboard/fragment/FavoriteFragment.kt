@@ -1,15 +1,12 @@
 package com.teikk.datn.view.dashboard.fragment
 
-import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.navigation.fragment.findNavController
 import com.teikk.datn.R
 import com.teikk.datn.base.BaseFragment
 import com.teikk.datn.base.GridSpacingItemDecoration
-import com.teikk.datn.base.setSafeOnClickListener
 import com.teikk.datn.data.model.Wishlist
 import com.teikk.datn.data.model.advanced.ProductWishlist
 import com.teikk.datn.databinding.FragmentFavoriteBinding
@@ -57,6 +54,10 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>() {
                 viewModel.insertWishlist(Wishlist(userId = viewModel.uid, productId = product.id, id = ""))
             }
             favoriteAdapter.notifyItemChanged(position)
+        }
+        favoriteAdapter.listener = { item, position ->
+            val direction = FavoriteFragmentDirections.actionFavoriteFragmentToProductDetailFragment(item.product, item.wishlist)
+            findNavController().navigate(direction)
         }
     }
 

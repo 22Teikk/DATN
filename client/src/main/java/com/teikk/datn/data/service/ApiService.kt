@@ -73,6 +73,10 @@ interface ApiService {
     suspend fun getCartForUser(
         @Query("uid") uid: String
     ): Response<List<Cart>>
+    @POST("api/v1/carts/user")
+    suspend fun updateManyCarts(
+        @Body carts: List<Cart>
+    ): Response<JsonObject>
     @POST("api/v1/carts")
     suspend fun addToCart(@Body cart: Cart): Response<Cart>
     @DELETE("api/v1/carts/{id}")

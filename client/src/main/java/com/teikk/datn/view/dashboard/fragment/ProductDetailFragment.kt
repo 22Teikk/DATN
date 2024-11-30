@@ -75,6 +75,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                 val cart = Cart("", userId = viewModel.uid, args.product.id, quantity = txtTotal.text.toString().toInt())
                 viewModel.insertCart(cart)
                 Toast.makeText(requireContext(), "Add To cart", Toast.LENGTH_SHORT).show()
+                findNavController().navigateUp()
             }
         }
     }

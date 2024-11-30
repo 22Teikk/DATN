@@ -30,7 +30,11 @@
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.teikk.datn.view.dashboard.fragment.FavoriteFragment"
-        android:label="@string/favorite" />
+        android:label="@string/favorite" >
+        <action
+            android:id="@+id/action_favoriteFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.teikk.datn.view.dashboard.fragment.MapFragment"
