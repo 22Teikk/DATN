@@ -74,8 +74,12 @@ class DashBoardViewModel @Inject constructor(
         sharedPreferenceUtils.putStringValue(UID, "")
         viewModelScope.launch(Dispatchers.IO) {
             _user.value?.let { it.data?.let { it1 -> userProfileRepository.deleteUserFromLocal(it1) } }
+            userProfileRepository.deleteAllUser()
+            wishListRepository.deleteALllWishlists()
+            with(Dispatchers.Main) {
+                logoutSuccess()
+            }
         }
-        logoutSuccess()
     }
 
     fun updateUser(user: UserProfile) = viewModelScope.launch(Dispatchers.IO) {
@@ -97,6 +101,10 @@ class DashBoardViewModel @Inject constructor(
     fun fetchProductData() = viewModelScope.launch(Dispatchers.IO) {
         productRepository.fetchProductRemote()
         productRepository.fetchProductLocal()
+    }
+
+    fun fetchWishlistData() = viewModelScope.launch(Dispatchers.IO) {
+        wishListRepository.fetchWishlistRemote(uid)
     }
 
     // Product

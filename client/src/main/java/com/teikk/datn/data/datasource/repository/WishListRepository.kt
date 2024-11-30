@@ -53,4 +53,8 @@ class WishListRepository @Inject constructor(
             wishlistLocalRepository.insertWishlists(wishlists)
         }
     }
+
+    fun deleteALllWishlists() = CoroutineScope(Dispatchers.IO).launch {
+        wishlistLocalRepository.deleteAllWishlists()
+    }
 }

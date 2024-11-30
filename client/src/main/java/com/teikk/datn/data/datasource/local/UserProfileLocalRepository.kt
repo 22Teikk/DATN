@@ -11,4 +11,5 @@ class UserProfileLocalRepository @Inject constructor(
     suspend fun insertUserProfile(userProfile: UserProfile) = userProfileDao.insert(userProfile)
     suspend fun updateUserProfile(userProfile: UserProfile) = userProfileDao.update(userProfile)
     suspend fun deleteUserProfile(userProfile: UserProfile) = userProfileDao.delete(userProfile)
+    suspend fun deleteAllUsers() = userProfileDao.deleteAllUsers()
 }
