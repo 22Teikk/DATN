@@ -1,11 +1,13 @@
 package com.teikk.datn.di
 
+import com.teikk.datn.data.datasource.local.CartLocalRepository
 import com.teikk.datn.data.datasource.local.CategoryLocalRepository
 import com.teikk.datn.data.datasource.local.PaymentMethodLocalRepository
 import com.teikk.datn.data.datasource.local.ProductLocalRepository
 import com.teikk.datn.data.datasource.local.RoleLocalRepository
 import com.teikk.datn.data.datasource.local.UserProfileLocalRepository
 import com.teikk.datn.data.datasource.local.WishlistLocalRepository
+import com.teikk.datn.data.service.dao.CartDao
 import com.teikk.datn.data.service.dao.CategoryDao
 import com.teikk.datn.data.service.dao.PaymentMethodDao
 import com.teikk.datn.data.service.dao.ProductDao
@@ -40,6 +42,10 @@ object LocalDataModule {
     @Provides
     @Singleton
     fun provideProductRepository(productDao: ProductDao) = ProductLocalRepository(productDao)
+
+    @Provides
+    @Singleton
+    fun provideCartRepository(cartDao: CartDao) = CartLocalRepository(cartDao)
 
     @Provides
     @Singleton

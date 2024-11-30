@@ -1,6 +1,7 @@
 package com.teikk.datn.data.service
 
 import com.google.gson.JsonObject
+import com.teikk.datn.data.model.Cart
 import com.teikk.datn.data.model.Category
 import com.teikk.datn.data.model.PaymentMethod
 import com.teikk.datn.data.model.Product
@@ -9,8 +10,6 @@ import com.teikk.datn.data.model.Store
 import com.teikk.datn.data.model.UserProfile
 import com.teikk.datn.data.model.Wishlist
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -68,6 +67,19 @@ interface ApiService {
     @DELETE("api/v1/wishlists/{id}")
     suspend fun deleteFromWishlist(@Path("id") id: String): Response<JsonObject>
     // Wishlist API
+
+    // Cart
+    @GET("api/v1/carts/user")
+    suspend fun getCartForUser(
+        @Query("uid") uid: String
+    ): Response<List<Cart>>
+    @POST("api/v1/carts")
+    suspend fun addToCart(@Body cart: Cart): Response<Cart>
+    @DELETE("api/v1/carts/{id}")
+    suspend fun deleteFromCart(@Path("id") id: String): Response<JsonObject>
+    @PUT("api/v1/carts/{id}")
+    suspend fun updateCart(@Path("id") id: String,@Body cart: Cart) : Response<Cart>
+    // Cart
 
 
 }

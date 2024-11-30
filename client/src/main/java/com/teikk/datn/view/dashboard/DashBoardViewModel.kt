@@ -1,15 +1,18 @@
 package com.teikk.datn.view.dashboard
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teikk.datn.base.SharedPreferenceUtils
+import com.teikk.datn.data.datasource.repository.CartRepository
 import com.teikk.datn.data.datasource.repository.CategoryRepository
 import com.teikk.datn.data.datasource.repository.PaymentMethodRepository
 import com.teikk.datn.data.datasource.repository.ProductRepository
 import com.teikk.datn.data.datasource.repository.UploadFileRepository
 import com.teikk.datn.data.datasource.repository.UserProfileRepository
 import com.teikk.datn.data.datasource.repository.WishListRepository
+import com.teikk.datn.data.model.Cart
 import com.teikk.datn.data.model.UserProfile
 import com.teikk.datn.data.model.Wishlist
 import com.teikk.datn.data.service.socket.SocketManager
@@ -20,6 +23,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -34,7 +39,8 @@ class DashBoardViewModel @Inject constructor(
     private val paymentMethodRepository: PaymentMethodRepository,
     private val uploadFileRepository: UploadFileRepository,
     private val productRepository: ProductRepository,
-    private val wishListRepository: WishListRepository
+    private val wishListRepository: WishListRepository,
+    private val cartRepository: CartRepository
 ) : ViewModel(){
     private val _paymentMethod = paymentMethodRepository.paymentMethodsLiveData
     val paymentMethod get() = _paymentMethod
@@ -46,6 +52,8 @@ class DashBoardViewModel @Inject constructor(
     val products get() = _products
     private val _wishlist = wishListRepository.wishlists
     val wishlist get() = _wishlist
+    private val _carts = cartRepository.carts
+    val carts get() = _carts
     val uid: String by lazy {
         sharedPreferenceUtils.getStringValue(UID, "")
     }
@@ -73,12 +81,19 @@ class DashBoardViewModel @Inject constructor(
         ShareConstant.removeToken(sharedPreferenceUtils)
         sharedPreferenceUtils.putStringValue(UID, "")
         viewModelScope.launch(Dispatchers.IO) {
-            _user.value?.let { it.data?.let { it1 -> userProfileRepository.deleteUserFromLocal(it1) } }
-            userProfileRepository.deleteAllUser()
-            wishListRepository.deleteALllWishlists()
-            with(Dispatchers.Main) {
-                logoutSuccess()
+            val deleteUserTask = async {
+                _user.value?.data?.let { userProfileRepository.deleteUserFromLocal(it) }
             }
+            val deleteAllUsersTask = async { userProfileRepository.deleteAllUser() }
+            val deleteAllWishlistsTask = async { wishListRepository.deleteALllWishlists() }
+            val deleteAllCartsTask = async { cartRepository.deleteALllCarts() }
+
+            // Chờ tất cả các task hoàn thành
+            deleteUserTask.await()
+            deleteAllUsersTask.await()
+            deleteAllWishlistsTask.await()
+            deleteAllCartsTask.await()
+            logoutSuccess()
         }
     }
 
@@ -106,6 +121,9 @@ class DashBoardViewModel @Inject constructor(
     fun fetchWishlistData() = viewModelScope.launch(Dispatchers.IO) {
         wishListRepository.fetchWishlistRemote(uid)
     }
+    fun fetchCartData() = viewModelScope.launch(Dispatchers.IO) {
+        cartRepository.fetchCartRemote(uid)
+    }
 
     // Product
     fun uploadFile(file: File, callback: (String?) -> Unit) = viewModelScope.launch(Dispatchers.IO) {
@@ -115,6 +133,7 @@ class DashBoardViewModel @Inject constructor(
         }
     }
 
+    // Wishlist
     fun insertWishlist(wishlist: Wishlist) = viewModelScope.launch(Dispatchers.IO) {
         wishListRepository.insertWishlist(wishlist)
     }
@@ -122,4 +141,24 @@ class DashBoardViewModel @Inject constructor(
     fun deleteWishlist(wishlist: Wishlist) = viewModelScope.launch(Dispatchers.IO) {
         wishListRepository.deleteWishlist(wishlist)
     }
+    // Wishlist
+
+    // Cart
+    fun insertCart(cart: Cart) = viewModelScope.launch(Dispatchers.IO) {
+        val existingCart = _carts.value.find { it.productId == cart.productId }
+        if (existingCart != null) {
+            val updatedCart = existingCart.copy(quantity = existingCart.quantity + cart.quantity)
+            Log.d("CART_DATA", "Update: " + updatedCart.toString())
+            cartRepository.updateCart(updatedCart)
+        } else {
+            Log.d("CART_DATA", "Insert New Cart: " + cart.toString())
+            cartRepository.insertCart(cart)
+        }
+    }
+
+    fun deleteCart(cart: Cart) = viewModelScope.launch(Dispatchers.IO) {
+        cartRepository.deleteCart(cart)
+    }
+    // Cart
+
 }

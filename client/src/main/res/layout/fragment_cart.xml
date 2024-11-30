@@ -2,120 +2,125 @@
 <layout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-        android:id="@+id/layoutData"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <TextView
+        android:id="@+id/swipeRefresh"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="@dimen/_20ssp"
-            android:textColor="@color/black"
-            android:layout_height="?actionBarSize"
-            android:text="Cart"/>
+            android:layout_height="match_parent">
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            <LinearLayout
+                android:id="@+id/layoutData"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="@dimen/_20ssp"
+                    android:textColor="@color/black"
+                    android:layout_height="?actionBarSize"
+                    android:text="Cart"/>
+
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:clipToPadding="false"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:nestedScrollingEnabled="false"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="@dimen/_5sdp"
+                            android:id="@+id/rcvCart" />
+
+                        <LinearLayout
+                            android:background="@drawable/background_circle_edittext"
+                            android:layout_width="match_parent"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="@dimen/_10sdp"
+                            android:layout_height="@dimen/_40sdp">
+
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:background="@android:color/transparent"
+                                android:inputType="text"
+                                android:textStyle="normal"
+                                android:textSize="@dimen/_14ssp"
+                                android:hint="Promo Code"
+                                android:id="@+id/edtPromoCode"
+                                android:layout_height="match_parent"/>
+
+                            <androidx.cardview.widget.CardView
+                                app:cardElevation="0dp"
+                                android:layout_gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/_30sdp"
+                                android:id="@+id/btnSave"
+                                android:layout_margin="@dimen/_1sdp"
+                                app:cardBackgroundColor="@color/orange"
+                                app:cardCornerRadius="@dimen/_20sdp"
+                                app:layout_constraintVertical_bias="0.5" >
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:text="Apply"
+                                    android:background="@color/orange"
+                                    android:gravity="center"
+                                    android:textStyle="normal"
+                                    android:textSize="@dimen/_13ssp"
+                                    android:paddingHorizontal="@dimen/_15sdp"
+                                    android:textColor="@color/white"
+                                    />
+
+                            </androidx.cardview.widget.CardView>
+
+                        </LinearLayout>
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="@dimen/_5sdp"
+                            android:nestedScrollingEnabled="false"
+                            android:id="@+id/rcvPrice" />
+
+                    </LinearLayout>
+
+                </androidx.core.widget.NestedScrollView>
+
+                <Button
+                    android:id="@+id/btnCheckout"
+                    android:layout_marginHorizontal="@dimen/_50sdp"
+                    android:layout_width="match_parent"
+                    android:paddingVertical="@dimen/_10sdp"
+                    android:text="CHECKOUT"
+                    android:textSize="@dimen/_12ssp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:layout_height="wrap_content">
+
+                </Button>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:clipToPadding="false"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:nestedScrollingEnabled="false"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/_5sdp"
-                    android:id="@+id/rcvCart" />
-
-                <LinearLayout
-                    android:background="@drawable/background_circle_edittext"
-                    android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="@dimen/_10sdp"
-                    android:layout_height="@dimen/_40sdp">
-
-                    <EditText
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:inputType="text"
-                        android:textStyle="normal"
-                        android:textSize="@dimen/_14ssp"
-                        android:hint="Promo Code"
-                        android:id="@+id/edtPromoCode"
-                        android:layout_height="match_parent"/>
-
-                    <androidx.cardview.widget.CardView
-                        app:cardElevation="0dp"
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_30sdp"
-                        android:id="@+id/btnSave"
-                        android:layout_margin="@dimen/_1sdp"
-                        app:cardBackgroundColor="@color/orange"
-                        app:cardCornerRadius="@dimen/_20sdp"
-                        app:layout_constraintVertical_bias="0.5" >
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Apply"
-                            android:background="@color/orange"
-                            android:gravity="center"
-                            android:textStyle="normal"
-                            android:textSize="@dimen/_13ssp"
-                            android:paddingHorizontal="@dimen/_15sdp"
-                            android:textColor="@color/white"
-                            />
-
-                    </androidx.cardview.widget.CardView>
-
-                </LinearLayout>
-
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/_5sdp"
-                    android:nestedScrollingEnabled="false"
-                    android:id="@+id/rcvPrice" />
+                android:orientation="vertical"
+                android:id="@+id/layoutEmpty">
 
             </LinearLayout>
-
-        </androidx.core.widget.NestedScrollView>
-
-        <Button
-            android:id="@+id/btnCheckout"
-            android:layout_marginHorizontal="@dimen/_50sdp"
-            android:layout_width="match_parent"
-            android:paddingVertical="@dimen/_10sdp"
-            android:text="CHECKOUT"
-            android:textSize="@dimen/_12ssp"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:layout_height="wrap_content">
-
-        </Button>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/layoutEmpty">
-
-    </LinearLayout>
-</LinearLayout>
+        </LinearLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

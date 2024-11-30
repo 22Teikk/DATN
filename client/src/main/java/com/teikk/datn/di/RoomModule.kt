@@ -2,6 +2,7 @@ package com.teikk.datn.di
 
 import android.content.Context
 import com.teikk.datn.data.service.DatabaseApp
+import com.teikk.datn.data.service.dao.CartDao
 import com.teikk.datn.data.service.dao.CategoryDao
 import com.teikk.datn.data.service.dao.PaymentMethodDao
 import com.teikk.datn.data.service.dao.ProductDao
@@ -59,5 +60,11 @@ object RoomModule {
     @Singleton
     fun provideWishlistDao(databaseApp: DatabaseApp) : WishlistDao {
         return databaseApp.wishlistDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideCartDao(databaseApp: DatabaseApp) : CartDao {
+        return databaseApp.cartDao()
     }
 }

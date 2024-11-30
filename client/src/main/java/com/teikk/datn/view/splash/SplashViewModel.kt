@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teikk.datn.MyApp
 import com.teikk.datn.base.SharedPreferenceUtils
+import com.teikk.datn.data.datasource.repository.CartRepository
 import com.teikk.datn.data.datasource.repository.CategoryRepository
 import com.teikk.datn.data.datasource.repository.PaymentMethodRepository
 import com.teikk.datn.data.datasource.repository.RoleRepository
@@ -23,7 +24,8 @@ class SplashViewModel @Inject constructor(
     private val categoryRepository: CategoryRepository,
     private val paymentMethodRepository: PaymentMethodRepository,
     private val summaryRepository: SummaryRepository,
-    private val wishListRepository: WishListRepository
+    private val wishListRepository: WishListRepository,
+    private val cartRepository: CartRepository
 ) : ViewModel() {
     private val TAG = "SplashViewModel-TAG"
     private val _isFirstTime = MutableLiveData<Boolean>()
@@ -54,6 +56,7 @@ class SplashViewModel @Inject constructor(
         }
         if (uid != "") {
             wishListRepository.fetchWishlistRemote(uid)
+            cartRepository.fetchCartRemote(uid)
         }
     }
 }

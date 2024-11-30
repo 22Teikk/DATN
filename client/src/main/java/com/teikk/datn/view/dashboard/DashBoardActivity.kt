@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -17,6 +18,8 @@ import com.teikk.datn.base.BaseActivity
 import com.teikk.datn.databinding.ActivityDashBoardBinding
 import com.teikk.datn.view.authentication.AuthenticationActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DashBoardActivity : BaseActivity<ActivityDashBoardBinding>() {
@@ -91,8 +94,12 @@ class DashBoardActivity : BaseActivity<ActivityDashBoardBinding>() {
                 Glide.with(root).load(it.data?.imageUrl).into(navigationView.findViewById(R.id.nav_header_imageView))
 
             }
+            lifecycleScope.launch {
+                viewModel.carts.collectLatest {
+                    badgeCart.number = it.size
+                }
+            }
         }
-        badgeCart.number = 20
         badgeNotification.isVisible = true
     }
 
@@ -100,7 +107,7 @@ class DashBoardActivity : BaseActivity<ActivityDashBoardBinding>() {
         binding.main.openDrawer(GravityCompat.START)
     }
 
-    private fun closeDrawerAndHideBottomNav() {
+    fun closeDrawerAndHideBottomNav() {
         with(binding) {
             main.closeDrawer(GravityCompat.START)
             bottomNavigation.visibility = View.GONE

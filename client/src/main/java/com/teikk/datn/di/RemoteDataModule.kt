@@ -2,6 +2,7 @@ package com.teikk.datn.di
 
 import com.teikk.datn.base.SharedPreferenceUtils
 import com.teikk.datn.data.datasource.remote.AuthRepository
+import com.teikk.datn.data.datasource.remote.CartRemoteRepository
 import com.teikk.datn.data.datasource.remote.CategoryRemoteRepository
 import com.teikk.datn.data.datasource.remote.PaymentMethodRemoteRepository
 import com.teikk.datn.data.datasource.remote.ProductRemoteRepository
@@ -25,8 +26,8 @@ import javax.inject.Singleton
 object RemoteDataModule {
     // Company
 //    const val BASE_URL = "http://192.168.1.253:5001/"
-    const val BASE_URL = "http://94.237.64.46:5001/"
-//    const val BASE_URL = "http://192.168.0.102:5001/"
+//    const val BASE_URL = "http://94.237.64.46:5001/"
+    const val BASE_URL = "http://192.168.0.102:5001/"
     // Home
 //    const val BASE_URL = "http://192.168.55.113:5001/"
     @Provides
@@ -80,5 +81,10 @@ object RemoteDataModule {
     @Provides
     @Singleton
     fun provideWishlistRemote(apiService: ApiService) = WishlistRemoteRepository(apiService)
+
+    @Provides
+    @Singleton
+    fun provideCartRemote(apiService: ApiService) = CartRemoteRepository(apiService)
+
 
 }
