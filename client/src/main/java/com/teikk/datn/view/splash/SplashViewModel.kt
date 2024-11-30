@@ -9,6 +9,7 @@ import com.teikk.datn.data.datasource.repository.CategoryRepository
 import com.teikk.datn.data.datasource.repository.PaymentMethodRepository
 import com.teikk.datn.data.datasource.repository.RoleRepository
 import com.teikk.datn.data.datasource.repository.SummaryRepository
+import com.teikk.datn.data.datasource.repository.WishListRepository
 import com.teikk.datn.utils.ShareConstant.UID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +22,8 @@ class SplashViewModel @Inject constructor(
     private val roleRepository: RoleRepository,
     private val categoryRepository: CategoryRepository,
     private val paymentMethodRepository: PaymentMethodRepository,
-    private val summaryRepository: SummaryRepository
+    private val summaryRepository: SummaryRepository,
+    private val wishListRepository: WishListRepository
 ) : ViewModel() {
     private val TAG = "SplashViewModel-TAG"
     private val _isFirstTime = MutableLiveData<Boolean>()
@@ -49,6 +51,9 @@ class SplashViewModel @Inject constructor(
         val response = summaryRepository.fetchDataStore()
         if (response.isSuccessful) {
             MyApp.store = response.body()!!
+        }
+        if (uid != "") {
+            wishListRepository.fetchWishlistRemote(uid)
         }
     }
 }

@@ -5,11 +5,13 @@ import com.teikk.datn.data.datasource.local.PaymentMethodLocalRepository
 import com.teikk.datn.data.datasource.local.ProductLocalRepository
 import com.teikk.datn.data.datasource.local.RoleLocalRepository
 import com.teikk.datn.data.datasource.local.UserProfileLocalRepository
+import com.teikk.datn.data.datasource.local.WishlistLocalRepository
 import com.teikk.datn.data.service.dao.CategoryDao
 import com.teikk.datn.data.service.dao.PaymentMethodDao
 import com.teikk.datn.data.service.dao.ProductDao
 import com.teikk.datn.data.service.dao.RoleDao
 import com.teikk.datn.data.service.dao.UserProfileDao
+import com.teikk.datn.data.service.dao.WishlistDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,4 +40,8 @@ object LocalDataModule {
     @Provides
     @Singleton
     fun provideProductRepository(productDao: ProductDao) = ProductLocalRepository(productDao)
+
+    @Provides
+    @Singleton
+    fun provideWishlistRepository(wishlistDao: WishlistDao) = WishlistLocalRepository(wishlistDao)
 }

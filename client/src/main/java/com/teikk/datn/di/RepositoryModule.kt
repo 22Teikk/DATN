@@ -5,17 +5,20 @@ import com.teikk.datn.data.datasource.local.PaymentMethodLocalRepository
 import com.teikk.datn.data.datasource.local.ProductLocalRepository
 import com.teikk.datn.data.datasource.local.RoleLocalRepository
 import com.teikk.datn.data.datasource.local.UserProfileLocalRepository
+import com.teikk.datn.data.datasource.local.WishlistLocalRepository
 import com.teikk.datn.data.datasource.remote.CategoryRemoteRepository
 import com.teikk.datn.data.datasource.remote.PaymentMethodRemoteRepository
 import com.teikk.datn.data.datasource.remote.ProductRemoteRepository
 import com.teikk.datn.data.datasource.remote.RoleRemoteRepository
 import com.teikk.datn.data.datasource.remote.UserProfileRemoteRepository
+import com.teikk.datn.data.datasource.remote.WishlistRemoteRepository
 import com.teikk.datn.data.datasource.repository.CategoryRepository
 import com.teikk.datn.data.datasource.repository.PaymentMethodRepository
 import com.teikk.datn.data.datasource.repository.ProductRepository
 import com.teikk.datn.data.datasource.repository.RoleRepository
 import com.teikk.datn.data.datasource.repository.SummaryRepository
 import com.teikk.datn.data.datasource.repository.UserProfileRepository
+import com.teikk.datn.data.datasource.repository.WishListRepository
 import com.teikk.datn.data.service.ApiService
 import dagger.Module
 import dagger.Provides
@@ -46,6 +49,10 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideProductRepository(remoteRepository: ProductRemoteRepository, localRepository: ProductLocalRepository) = ProductRepository(remoteRepository, localRepository)
+
+    @Provides
+    @Singleton
+    fun provideWishlistRepository(remoteRepository: WishlistRemoteRepository, localRepository: WishlistLocalRepository) = WishListRepository(remoteRepository, localRepository)
 
     @Provides
     @Singleton

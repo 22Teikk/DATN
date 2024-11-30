@@ -8,6 +8,7 @@ import com.teikk.datn.data.datasource.remote.ProductRemoteRepository
 import com.teikk.datn.data.datasource.remote.RoleRemoteRepository
 import com.teikk.datn.data.datasource.repository.UploadFileRepository
 import com.teikk.datn.data.datasource.remote.UserProfileRemoteRepository
+import com.teikk.datn.data.datasource.remote.WishlistRemoteRepository
 import com.teikk.datn.data.service.ApiService
 import dagger.Module
 import dagger.Provides
@@ -24,7 +25,8 @@ import javax.inject.Singleton
 object RemoteDataModule {
     // Company
 //    const val BASE_URL = "http://192.168.1.253:5001/"
-    const val BASE_URL = "http://94.237.64.46:5001/"
+//    const val BASE_URL = "http://94.237.64.46:5001/"
+    const val BASE_URL = "http://192.168.0.102:5001/"
     // Home
 //    const val BASE_URL = "http://192.168.55.113:5001/"
     @Provides
@@ -74,4 +76,9 @@ object RemoteDataModule {
     @Provides
     @Singleton
     fun provideProductRemote(apiService: ApiService, sharedPreferenceUtils: SharedPreferenceUtils) = ProductRemoteRepository(apiService, sharedPreferenceUtils)
+
+    @Provides
+    @Singleton
+    fun provideWishlistRemote(apiService: ApiService) = WishlistRemoteRepository(apiService)
+
 }

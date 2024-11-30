@@ -7,6 +7,7 @@ import com.teikk.datn.data.service.dao.PaymentMethodDao
 import com.teikk.datn.data.service.dao.ProductDao
 import com.teikk.datn.data.service.dao.RoleDao
 import com.teikk.datn.data.service.dao.UserProfileDao
+import com.teikk.datn.data.service.dao.WishlistDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -52,5 +53,11 @@ object RoomModule {
     @Singleton
     fun provideProductDao(databaseApp: DatabaseApp) : ProductDao {
         return databaseApp.productDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideWishlistDao(databaseApp: DatabaseApp) : WishlistDao {
+        return databaseApp.wishlistDao()
     }
 }

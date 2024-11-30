@@ -9,7 +9,9 @@ import com.teikk.datn.data.datasource.repository.PaymentMethodRepository
 import com.teikk.datn.data.datasource.repository.ProductRepository
 import com.teikk.datn.data.datasource.repository.UploadFileRepository
 import com.teikk.datn.data.datasource.repository.UserProfileRepository
+import com.teikk.datn.data.datasource.repository.WishListRepository
 import com.teikk.datn.data.model.UserProfile
+import com.teikk.datn.data.model.Wishlist
 import com.teikk.datn.data.service.socket.SocketManager
 import com.teikk.datn.utils.Resource
 import com.teikk.datn.utils.ShareConstant
@@ -31,24 +33,31 @@ class DashBoardViewModel @Inject constructor(
     private val userProfileRepository: UserProfileRepository,
     private val paymentMethodRepository: PaymentMethodRepository,
     private val uploadFileRepository: UploadFileRepository,
-    private val productRepository: ProductRepository
+    private val productRepository: ProductRepository,
+    private val wishListRepository: WishListRepository
 ) : ViewModel(){
     private val _paymentMethod = paymentMethodRepository.paymentMethodsLiveData
     val paymentMethod get() = _paymentMethod
     private val _category = categoryRepository.categoriesLiveData
     val category get() = _category
     private val _user = MutableLiveData<Resource<UserProfile>>()
+    val user get() = _user
     private val _products = productRepository.products
     val products get() = _products
-    val user get() = _user
-
-    private val uid: String by lazy {
+    private val _wishlist = wishListRepository.wishlists
+    val wishlist get() = _wishlist
+    val uid: String by lazy {
         sharedPreferenceUtils.getStringValue(UID, "")
     }
     init {
+        initData()
+    }
+
+    private fun initData() {
         viewModelScope.launch(Dispatchers.IO) {
             paymentMethodRepository.fetchPaymentMethodData()
             _user.postValue(Resource.Success(userProfileRepository.getUserProfileByID(uid)))
+            wishListRepository.fetchWishlistRemote(uid)
         }
         fetchProductData()
         socket.socketConnect()
@@ -85,8 +94,9 @@ class DashBoardViewModel @Inject constructor(
 
 
     // Product
-    private fun fetchProductData() = viewModelScope.launch(Dispatchers.IO) {
+    fun fetchProductData() = viewModelScope.launch(Dispatchers.IO) {
         productRepository.fetchProductRemote()
+        productRepository.fetchProductLocal()
     }
 
     // Product
@@ -95,5 +105,13 @@ class DashBoardViewModel @Inject constructor(
         withContext(Dispatchers.Main) {
             callback(result)
         }
+    }
+
+    fun insertWishlist(wishlist: Wishlist) = viewModelScope.launch(Dispatchers.IO) {
+        wishListRepository.insertWishlist(wishlist)
+    }
+
+    fun deleteWishlist(wishlist: Wishlist) = viewModelScope.launch(Dispatchers.IO) {
+        wishListRepository.deleteWishlist(wishlist)
     }
 }

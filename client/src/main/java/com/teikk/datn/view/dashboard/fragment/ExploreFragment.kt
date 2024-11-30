@@ -11,14 +11,16 @@ import com.teikk.datn.R
 import com.teikk.datn.base.BaseFragment
 import com.teikk.datn.base.GridSpacingItemDecoration
 import com.teikk.datn.base.setSafeOnClickListener
+import com.teikk.datn.data.model.Wishlist
+import com.teikk.datn.data.model.advanced.ProductWishlist
 import com.teikk.datn.databinding.FragmentExploreBinding
 import com.teikk.datn.view.dashboard.DashBoardActivity
 import com.teikk.datn.view.dashboard.DashBoardViewModel
 import com.teikk.datn.view.dashboard.adapter.CategoryAdapter
-import com.teikk.datn.view.dashboard.adapter.ProductAdapter
+import com.teikk.datn.view.dashboard.adapter.ProductWishlistAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -27,8 +29,8 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
     private val categoryAdapter by lazy {
         CategoryAdapter()
     }
-    private val productAdapter by lazy {
-        ProductAdapter()
+    private val productWishlistAdapter by lazy {
+        ProductWishlistAdapter()
     }
     override fun getLayoutResId(): Int {
         return R.layout.fragment_explore
@@ -45,7 +47,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
                 setHasFixedSize(true)
                 layoutManager = androidx.recyclerview.widget.GridLayoutManager(requireContext(), 2)
                 addItemDecoration(GridSpacingItemDecoration(2, 15, includeEdge = true))
-                adapter = productAdapter
+                adapter = productWishlistAdapter
             }
         }
     }
@@ -55,19 +57,38 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
             btnMenu.setSafeOnClickListener {
                 (requireActivity() as DashBoardActivity).openDrawer()
             }
+            swipeRefresh.setOnRefreshListener {
+                viewModel.fetchProductData()
+                swipeRefresh.isRefreshing = false
+            }
         }
         categoryAdapter.listener = { item, position ->
             categoryAdapter.selectedPosition = position
             categoryAdapter.notifyDataSetChanged()
             viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.products.map {
-                    it.filter {
+                combine(viewModel.products, viewModel.wishlist) { products, wishlists ->
+                    products.filter {
                         it.categoryId == categoryAdapter.currentList[categoryAdapter.selectedPosition].id
+                    }.map { product ->
+                        ProductWishlist(
+                            product = product,
+                            wishlist = wishlists.find { it.productId == product.id },
+                        )
                     }
-                }.collectLatest { products ->
-                    productAdapter.submitList(products)
+                }.collectLatest {
+                    productWishlistAdapter.submitList(it)
+                    Log.d("ProductWishlist", it.size.toString())
                 }
             }
+        }
+        productWishlistAdapter.favoriteListener = { item, position ->
+            val product = item.product
+            if (item.wishlist != null) {
+                viewModel.deleteWishlist(Wishlist(userId = viewModel.uid, productId = product.id, id = item.wishlist!!.id))
+            } else {
+                viewModel.insertWishlist(Wishlist(userId = viewModel.uid, productId = product.id, id = ""))
+            }
+            productWishlistAdapter.notifyItemChanged(position)
         }
     }
 
@@ -81,12 +102,17 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
                 categoryAdapter.submitList(it)
                 if (it.isNotEmpty()) {
                     viewLifecycleOwner.lifecycleScope.launch {
-                        viewModel.products.map {
-                            it.filter {
-                                it.categoryId == categoryAdapter.currentList[categoryAdapter.selectedPosition].id
+                        combine(viewModel.products, viewModel.wishlist) { products, wishlists ->
+                            products.map { product ->
+                                val wishlistItem = wishlists.find { it.productId == product.id }
+                                ProductWishlist(
+                                    product = product,
+                                    wishlist = wishlistItem
+                                )
                             }
-                        }.collectLatest { products ->
-                            productAdapter.submitList(products)
+                        }.collectLatest {
+                            productWishlistAdapter.submitList(it)
+                            Log.d("ProductWishlist", it.size.toString())
                         }
                     }
                 }

@@ -7,11 +7,13 @@ import com.teikk.datn.data.model.Product
 import com.teikk.datn.data.model.Role
 import com.teikk.datn.data.model.Store
 import com.teikk.datn.data.model.UserProfile
+import com.teikk.datn.data.model.Wishlist
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.HeaderMap
 import retrofit2.http.Multipart
@@ -19,6 +21,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
 
@@ -54,5 +57,17 @@ interface ApiService {
     @GET("api/v1/products")
     suspend fun getAllProducts(@HeaderMap adminHeaders: Map<String, String>): Response<List<Product>>
     // Product API
+
+    // Wishlist API
+    @GET("api/v1/wishlists/user")
+    suspend fun getWishlistForUser(
+        @Query("uid") uid: String
+    ): Response<List<Wishlist>>
+    @POST("api/v1/wishlists")
+    suspend fun addToWishlist(@Body wishlist: Wishlist): Response<Wishlist>
+    @DELETE("api/v1/wishlists/{id}")
+    suspend fun deleteFromWishlist(@Path("id") id: String): Response<JsonObject>
+    // Wishlist API
+
 
 }
