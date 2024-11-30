@@ -10,4 +10,5 @@ class WishlistLocalRepository @Inject constructor(
     suspend fun getAllWishlists() = wishlistDao.getAllWishlist()
     suspend fun insertWishlists(wishlists: List<Wishlist>) = wishlistDao.insertWishlists(wishlists)
     suspend fun deleteWishlist(wishlist: Wishlist) = wishlistDao.delete(wishlist)
+    suspend fun deleteAllWishlists() = wishlistDao.deleteAllWishlists()
 }

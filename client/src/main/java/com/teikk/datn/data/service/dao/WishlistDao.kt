@@ -18,4 +18,8 @@ interface WishlistDao {
 
     @Query("SELECT * FROM wishlist_tables")
     fun getAllWishlist(): Flow<List<Wishlist>>
+
+    @Query("DELETE FROM wishlist_tables")
+    fun deleteAllWishlists()
+
 }

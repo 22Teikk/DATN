@@ -22,4 +22,6 @@ interface UserProfileDao {
     @Query("SELECT * FROM user_table WHERE id = :id")
     fun getUserByID(id: String): UserProfile
 
+    @Query("DELETE FROM user_table")
+    fun deleteAllUsers()
 }
