@@ -3,6 +3,7 @@ package com.teikk.datn.data.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 @Entity("product_tables")
 data class Product(
@@ -23,4 +24,4 @@ data class Product(
     var thumbnail: String,
     @SerializedName("discount_id")
     var discountId: String? = null,
-)
+) : Serializable

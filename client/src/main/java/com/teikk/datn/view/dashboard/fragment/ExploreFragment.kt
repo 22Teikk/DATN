@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -89,6 +90,10 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
                 viewModel.insertWishlist(Wishlist(userId = viewModel.uid, productId = product.id, id = ""))
             }
             productWishlistAdapter.notifyItemChanged(position)
+        }
+        productWishlistAdapter.listener = {item, position ->
+            val direction = ExploreFragmentDirections.actionExploreFragmentToProductDetailFragment(item.product, item.wishlist)
+            findNavController().navigate(direction)
         }
     }
 
