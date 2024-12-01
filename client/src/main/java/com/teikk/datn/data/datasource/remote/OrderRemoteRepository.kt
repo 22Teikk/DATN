@@ -9,4 +9,5 @@ class OrderRemoteRepository @Inject constructor(
 ) {
     suspend fun getOrderForUser(uid: String) = apiService.getOrderForUser(uid)
     suspend fun createOrder(order: Order) = apiService.createOrder(order)
+    suspend fun updateOrder(order: Order) = apiService.updateOrder(order.id, order)
 }

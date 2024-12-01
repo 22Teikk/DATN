@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.teikk.datn.utils.DateTimeConstant
+import java.io.Serializable
 
 @Entity(tableName = "order_tables")
 data class Order(
@@ -23,4 +24,4 @@ data class Order(
     @SerializedName("is_shipment")
     var isShipment: Boolean = true,
     var description: String = ""
-)
+) : Serializable

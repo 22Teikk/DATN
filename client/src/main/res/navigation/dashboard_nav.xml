@@ -87,5 +87,8 @@
             android:name="isFeedback"
             app:argType="boolean"
             android:defaultValue="false" />
+        <argument
+            android:name="order"
+            app:argType="com.teikk.datn.data.model.Order" />
     </fragment>
 </navigation>

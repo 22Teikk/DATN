@@ -39,7 +39,7 @@ class OrderDetailFragment(
         if (!args.isFeedback) {
             binding.btnSubmit.visibility = View.GONE
         }else {
-            binding.btnSubmit.visibility = View.GONE
+            binding.btnSubmit.visibility = View.VISIBLE
         }
     }
 
@@ -67,6 +67,7 @@ class OrderDetailFragment(
                     )
                     viewModel.sendFeedback(feedback)
                 }
+                viewModel.updateOrder(args.order.copy(status = "Success"))
                 findNavController().navigateUp()
             }
         }

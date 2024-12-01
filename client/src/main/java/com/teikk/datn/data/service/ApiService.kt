@@ -96,6 +96,8 @@ interface ApiService {
     ): Response<List<Order>>
     @POST("api/v1/orders")
     suspend fun createOrder(@Body order: Order): Response<Order>
+    @PUT("api/v1/orders/{id}")
+    suspend fun updateOrder(@Path("id") id: String,@Body order: Order) : Response<Order>
 
     // Order Item
     @POST("api/v1/order_items")

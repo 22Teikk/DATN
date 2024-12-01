@@ -37,14 +37,19 @@ class DeliveryFragment : BaseFragment<FragmentDeliveryBinding>() {
                 )
             )
             rcvDelivery.adapter = orderAdapter
+            swipeRefresh.setOnRefreshListener {
+                viewModel.fetchOrderData()
+                swipeRefresh.isRefreshing = false
+            }
         }
     }
 
     override fun initEvent() {
         orderAdapter.listener = { item, position ->
-            viewModel.fetchOrderItemData(item.id)
-            val action = OrderFragmentDirections.actionOrderFragmentToOrderDetailFragment(isFeedback = true)
-            findNavController().navigate(action)
+            viewModel.fetchOrderItemData(item.id) {
+                val action = OrderFragmentDirections.actionOrderFragmentToOrderDetailFragment(isFeedback = true, order = item)
+                findNavController().navigate(action)
+            }
         }
     }
 

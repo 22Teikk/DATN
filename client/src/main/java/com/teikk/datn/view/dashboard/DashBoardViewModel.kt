@@ -100,6 +100,7 @@ class DashBoardViewModel @Inject constructor(
             if (it == uid) {
                 notificationHelper.showNotification("The order has been successfully delivered.", "" +
                         "You can rate the quality of the order to help the store continue improving its services.")
+                fetchOrderData()
             }
         }
     }
@@ -161,10 +162,13 @@ class DashBoardViewModel @Inject constructor(
         orderRepository.fetchOrderRemote(uid)
     }
 
-    fun fetchOrderItemData(orderID: String) = viewModelScope.launch(Dispatchers.IO) {
+    fun fetchOrderItemData(orderID: String, callback: () -> Unit) = viewModelScope.launch(Dispatchers.IO) {
         val response = orderItemRepository.fetchOrderItemRemote(orderID)
         if (response.isSuccessful) {
             _orderItem.value = response.body()!!
+            withContext(Dispatchers.Main) {
+                callback()
+            }
         }
     }
 
@@ -203,9 +207,6 @@ class DashBoardViewModel @Inject constructor(
         cartRepository.deleteCart(cart)
     }
 
-    fun updateManyCarts(carts: List<Cart>) = viewModelScope.launch(Dispatchers.IO) {
-        cartRepository.updateManyCarts(carts)
-    }
     // Cart
 
     // Order
@@ -247,7 +248,15 @@ class DashBoardViewModel @Inject constructor(
                         orderItemRepository.insertOrderItemLocal(newOrderItem)
                     }
                 }
+                socket.placeOrder(uid, "Order")
             }
+        }
+    }
+
+    fun updateOrder(order: Order) = viewModelScope.launch(Dispatchers.IO) {
+        val response = orderRepository.updateOrder(order)
+        if (response.isSuccessful) {
+            orderRepository.fetchOrderRemote(uid)
         }
     }
     // Order

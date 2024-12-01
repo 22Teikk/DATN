@@ -36,14 +36,19 @@ class UpcomingFragment : BaseFragment<FragmentUpcomingBinding>() {
                 )
             )
             rcvUpcoming.adapter = orderAdapter
+            swipeRefresh.setOnRefreshListener {
+                viewModel.fetchOrderData()
+                swipeRefresh.isRefreshing = false
+            }
         }
     }
 
     override fun initEvent() {
         orderAdapter.listener = { item, position ->
-            viewModel.fetchOrderItemData(item.id)
-            val action = OrderFragmentDirections.actionOrderFragmentToOrderDetailFragment()
-            findNavController().navigate(action)
+            viewModel.fetchOrderItemData(item.id) {
+                val action = OrderFragmentDirections.actionOrderFragmentToOrderDetailFragment(item)
+                findNavController().navigate(action)
+            }
         }
     }
 
