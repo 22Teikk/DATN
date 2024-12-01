@@ -42,7 +42,9 @@ class DeliveryFragment : BaseFragment<FragmentDeliveryBinding>() {
 
     override fun initEvent() {
         orderAdapter.listener = { item, position ->
-
+            viewModel.fetchOrderItemData(item.id)
+            val action = OrderFragmentDirections.actionOrderFragmentToOrderDetailFragment(isFeedback = true)
+            findNavController().navigate(action)
         }
     }
 

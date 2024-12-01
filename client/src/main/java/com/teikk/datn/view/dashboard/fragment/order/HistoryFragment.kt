@@ -39,6 +39,14 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
         }
     }
 
+    override fun initEvent() {
+        orderAdapter.listener = { item, position ->
+            viewModel.fetchOrderItemData(item.id)
+            val action = OrderFragmentDirections.actionOrderFragmentToOrderDetailFragment()
+            findNavController().navigate(action)
+        }
+    }
+
     override fun initObserver() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.orders.map {
