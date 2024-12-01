@@ -8,11 +8,11 @@ import com.google.gson.annotations.SerializedName
 data class OrderItem(
     @PrimaryKey
     @SerializedName("_id")
-    var id: String,
-    var price: Double,
-    var quantity: Int,
+    var id: String = "",
+    var price: Double = 0.0,
+    var quantity: Int = 1,
     @SerializedName("order_id")
-    var orderId: String,
+    var orderId: String = "",
     @SerializedName("product_id")
-    var productId: String,
+    var productId: String = "",
 )

@@ -4,10 +4,10 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.android.libraries.places.api.model.FuelPrice
 import com.teikk.datn.base.SharedPreferenceUtils
 import com.teikk.datn.data.datasource.repository.CartRepository
 import com.teikk.datn.data.datasource.repository.CategoryRepository
+import com.teikk.datn.data.datasource.repository.OrderItemRepository
 import com.teikk.datn.data.datasource.repository.OrderRepository
 import com.teikk.datn.data.datasource.repository.PaymentMethodRepository
 import com.teikk.datn.data.datasource.repository.ProductRepository
@@ -17,9 +17,11 @@ import com.teikk.datn.data.datasource.repository.UserProfileRepository
 import com.teikk.datn.data.datasource.repository.WishListRepository
 import com.teikk.datn.data.model.Cart
 import com.teikk.datn.data.model.Order
+import com.teikk.datn.data.model.OrderItem
 import com.teikk.datn.data.model.Payment
 import com.teikk.datn.data.model.UserProfile
 import com.teikk.datn.data.model.Wishlist
+import com.teikk.datn.data.model.advanced.ProductCart
 import com.teikk.datn.data.service.socket.SocketManager
 import com.teikk.datn.utils.DateTimeConstant
 import com.teikk.datn.utils.Resource
@@ -29,8 +31,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -48,7 +48,8 @@ class DashBoardViewModel @Inject constructor(
     private val wishListRepository: WishListRepository,
     private val cartRepository: CartRepository,
     private val orderRepository: OrderRepository,
-    private val summaryRepository: SummaryRepository
+    private val summaryRepository: SummaryRepository,
+    private val orderItemRepository: OrderItemRepository
 ) : ViewModel(){
     private val _paymentMethod = paymentMethodRepository.paymentMethodsLiveData
     val paymentMethod get() = _paymentMethod
@@ -62,6 +63,10 @@ class DashBoardViewModel @Inject constructor(
     val wishlist get() = _wishlist
     private val _carts = cartRepository.carts
     val carts get() = _carts
+    private val _orders = orderRepository.orders
+    val orders get() = _orders
+    private val _orderItems = orderItemRepository.orderItems
+    val orderItems get() = _orderItems
     val uid: String by lazy {
         sharedPreferenceUtils.getStringValue(UID, "")
     }
@@ -182,7 +187,10 @@ class DashBoardViewModel @Inject constructor(
     // Cart
 
     // Order
-    fun createOrder(order: Order, price: Double) = viewModelScope.launch(Dispatchers.IO) {
+    fun createOrder(order: Order, list: List<ProductCart>) = viewModelScope.launch(Dispatchers.IO) {
+        val price = list.sumOf {
+            it.product.price * it.cart.quantity
+        }
         val payment = Payment(
             id = "",
             amount = price,
@@ -200,6 +208,23 @@ class DashBoardViewModel @Inject constructor(
                 )
                 orderRepository.insertOrderLocal(newOrder)
                 cartRepository.deleteALllCarts()
+                list.forEach {
+                    val product = it.product
+                    val cart = it.cart
+                    val orderItem = OrderItem(
+                        price = product.price,
+                        quantity = cart.quantity,
+                        orderId = newOrder.id,
+                        productId = product.id
+                    )
+                    val createOrderItem = orderItemRepository.insertOrderItemRemote(orderItem)
+                    if (createOrderItem.isSuccessful) {
+                        val newOrderItem = orderItem.copy(
+                            id = createOrderItem.body()!!.id,
+                        )
+                        orderItemRepository.insertOrderItemLocal(newOrderItem)
+                    }
+                }
             }
         }
     }

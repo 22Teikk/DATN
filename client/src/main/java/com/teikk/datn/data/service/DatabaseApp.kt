@@ -8,6 +8,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.teikk.datn.data.model.Cart
 import com.teikk.datn.data.model.Category
 import com.teikk.datn.data.model.Order
+import com.teikk.datn.data.model.OrderItem
 import com.teikk.datn.data.model.PaymentMethod
 import com.teikk.datn.data.model.Product
 import com.teikk.datn.data.model.Role
@@ -16,13 +17,14 @@ import com.teikk.datn.data.model.Wishlist
 import com.teikk.datn.data.service.dao.CartDao
 import com.teikk.datn.data.service.dao.CategoryDao
 import com.teikk.datn.data.service.dao.OrderDao
+import com.teikk.datn.data.service.dao.OrderItemDao
 import com.teikk.datn.data.service.dao.PaymentMethodDao
 import com.teikk.datn.data.service.dao.ProductDao
 import com.teikk.datn.data.service.dao.RoleDao
 import com.teikk.datn.data.service.dao.UserProfileDao
 import com.teikk.datn.data.service.dao.WishlistDao
 
-@Database(entities = [Product::class, Order::class, Role::class, Cart::class, Category::class, UserProfile::class, PaymentMethod::class, Wishlist::class], version = 1, exportSchema = false)
+@Database(entities = [Product::class, OrderItem::class, Order::class, Role::class, Cart::class, Category::class, UserProfile::class, PaymentMethod::class, Wishlist::class], version = 1, exportSchema = false)
 abstract class DatabaseApp : RoomDatabase() {
     abstract fun roleDao() : RoleDao
     abstract fun categoryDao() : CategoryDao
@@ -32,6 +34,7 @@ abstract class DatabaseApp : RoomDatabase() {
     abstract fun wishlistDao() : WishlistDao
     abstract fun cartDao() : CartDao
     abstract fun orderDao() : OrderDao
+    abstract fun orderItemDao() : OrderItemDao
     companion object{
         @Volatile
         private var INSTANCE: DatabaseApp? = null

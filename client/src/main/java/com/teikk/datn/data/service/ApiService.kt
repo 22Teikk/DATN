@@ -4,6 +4,7 @@ import com.google.gson.JsonObject
 import com.teikk.datn.data.model.Cart
 import com.teikk.datn.data.model.Category
 import com.teikk.datn.data.model.Order
+import com.teikk.datn.data.model.OrderItem
 import com.teikk.datn.data.model.Payment
 import com.teikk.datn.data.model.PaymentMethod
 import com.teikk.datn.data.model.Product
@@ -93,7 +94,16 @@ interface ApiService {
         @Query("uid") uid: String
     ): Response<List<Order>>
     @POST("api/v1/orders")
-    suspend fun addToOrder(@Body order: Order): Response<Order>
+    suspend fun createOrder(@Body order: Order): Response<Order>
+
+    // Order Item
+    @POST("api/v1/order_items")
+    suspend fun createOrderItem(@Body order: OrderItem): Response<OrderItem>
+    @GET("api/v1/order_items/user")
+    suspend fun getOrderItemForOrder(
+        @Query("order_id") orderId: String
+    ): Response<List<OrderItem>>
+    // Order Item
 
     // Payment
     @POST("api/v1/payments")

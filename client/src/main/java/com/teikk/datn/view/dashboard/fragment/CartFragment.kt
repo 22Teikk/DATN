@@ -51,8 +51,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
             }
             btnCheckout.setSafeOnClickListener {
                 val order = Order(total = txtCount.text.toString().toInt(), userId = viewModel.uid, description = edtDescription.text.toString(), isShipment = radShipment.isChecked)
-                viewModel.createOrder(order, txtTotal.text.toString().toDouble())
-                Toast.makeText(requireContext(), "Order created", Toast.LENGTH_LONG).show()
+                viewModel.createOrder(order, cartAdapter.currentList)
                 initObserver()
             }
         }
@@ -62,7 +61,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
                 it.product.price * it.cart.quantity
             }
             binding.txtSubtotal.text = "$subTotal$"
-            binding.txtTotal.text = (subTotal - discount).toString()
+            binding.txtTotal.text = (subTotal - discount).toString() + "$"
         }
         cartAdapter.deleteListener = {item, position ->
             viewModel.deleteCart(item.cart)
@@ -78,7 +77,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
                 binding.layoutData.visibility = View.VISIBLE
                 binding.txtCount.text = cartAdapter.currentList.size.toString()
                 binding.txtSubtotal.text = subTotal.toString() + "$"
-                binding.txtTotal.text = (subTotal - discount).toString()
+                binding.txtTotal.text = (subTotal - discount).toString() + "$"
             }
         }
     }
@@ -108,7 +107,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
                     binding.layoutData.visibility = View.VISIBLE
                     binding.txtCount.text = it.size.toString()
                     binding.txtSubtotal.text = subTotal.toString() + "$"
-                    binding.txtTotal.text = (subTotal - discount).toString()
+                    binding.txtTotal.text = (subTotal - discount).toString() + "$"
                 }
             }
         }

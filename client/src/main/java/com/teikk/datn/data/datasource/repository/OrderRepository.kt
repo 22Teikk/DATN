@@ -24,7 +24,7 @@ class OrderRepository @Inject constructor(
         }
     }
 
-    suspend fun insertOrderRemote(order: Order) = orderRemoteRepository.addToOrder(order)
+    suspend fun insertOrderRemote(order: Order) = orderRemoteRepository.createOrder(order)
 
     fun insertOrderLocal(order: Order) = CoroutineScope(Dispatchers.IO).launch {
         orderLocalRepository.insertOrders(listOf(order))
