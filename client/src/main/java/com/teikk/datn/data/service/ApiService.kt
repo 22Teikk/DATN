@@ -3,6 +3,7 @@ package com.teikk.datn.data.service
 import com.google.gson.JsonObject
 import com.teikk.datn.data.model.Cart
 import com.teikk.datn.data.model.Category
+import com.teikk.datn.data.model.Feedback
 import com.teikk.datn.data.model.Order
 import com.teikk.datn.data.model.OrderItem
 import com.teikk.datn.data.model.Payment
@@ -108,4 +109,11 @@ interface ApiService {
     // Payment
     @POST("api/v1/payments")
     suspend fun makePayment(@Body payment: Payment): Response<Payment>
+
+    // Feedback
+    @POST("api/v1/feedbacks")
+    suspend fun makeFeedback(@Body feedback: Feedback): Response<Feedback>
+    // Feedback
+
+
 }

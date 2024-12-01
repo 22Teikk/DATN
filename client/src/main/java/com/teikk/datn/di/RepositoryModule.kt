@@ -20,12 +20,14 @@ import com.teikk.datn.data.datasource.remote.UserProfileRemoteRepository
 import com.teikk.datn.data.datasource.remote.WishlistRemoteRepository
 import com.teikk.datn.data.datasource.repository.CartRepository
 import com.teikk.datn.data.datasource.repository.CategoryRepository
+import com.teikk.datn.data.datasource.repository.FeedBackRepository
 import com.teikk.datn.data.datasource.repository.OrderItemRepository
 import com.teikk.datn.data.datasource.repository.OrderRepository
 import com.teikk.datn.data.datasource.repository.PaymentMethodRepository
 import com.teikk.datn.data.datasource.repository.ProductRepository
 import com.teikk.datn.data.datasource.repository.RoleRepository
 import com.teikk.datn.data.datasource.repository.SummaryRepository
+import com.teikk.datn.data.datasource.repository.UploadFileRepository
 import com.teikk.datn.data.datasource.repository.UserProfileRepository
 import com.teikk.datn.data.datasource.repository.WishListRepository
 import com.teikk.datn.data.service.ApiService
@@ -80,4 +82,7 @@ object RepositoryModule {
     @Singleton
     fun provideSummaryRepository(apiService: ApiService) = SummaryRepository(apiService)
 
+    @Provides
+    @Singleton
+    fun provideFeedbackRepository(apiService: ApiService) = FeedBackRepository(apiService)
 }

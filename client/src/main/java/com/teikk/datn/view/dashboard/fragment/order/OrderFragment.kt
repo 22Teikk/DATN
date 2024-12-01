@@ -1,8 +1,10 @@
 package com.teikk.datn.view.dashboard.fragment.order
 
+import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
@@ -12,6 +14,9 @@ import com.teikk.datn.databinding.FragmentOrderBinding
 import com.teikk.datn.view.dashboard.DashBoardViewModel
 import com.teikk.datn.view.dashboard.adapter.OrderViewPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class OrderFragment : BaseFragment<FragmentOrderBinding>() {
@@ -31,7 +36,8 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>() {
             TabLayoutMediator(tablayout, viewPager2) { tab, position ->
                 when (position) {
                     0 -> tab.text = "Upcoming"
-                    1 -> tab.text = "History"
+                    1 -> tab.text = "Delivered"
+                    2 -> tab.text = "History"
                 }
             }.attach()
         }
@@ -49,7 +55,6 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>() {
         with (binding) {
             viewModel.user.observe(viewLifecycleOwner) {
                 Glide.with(root).load(it.data?.imageUrl).into(imgAvatar)
-
             }
         }
     }

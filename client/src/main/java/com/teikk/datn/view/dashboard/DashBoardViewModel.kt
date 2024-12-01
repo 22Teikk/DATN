@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.teikk.datn.base.SharedPreferenceUtils
 import com.teikk.datn.data.datasource.repository.CartRepository
 import com.teikk.datn.data.datasource.repository.CategoryRepository
+import com.teikk.datn.data.datasource.repository.FeedBackRepository
 import com.teikk.datn.data.datasource.repository.OrderItemRepository
 import com.teikk.datn.data.datasource.repository.OrderRepository
 import com.teikk.datn.data.datasource.repository.PaymentMethodRepository
@@ -16,6 +17,7 @@ import com.teikk.datn.data.datasource.repository.UploadFileRepository
 import com.teikk.datn.data.datasource.repository.UserProfileRepository
 import com.teikk.datn.data.datasource.repository.WishListRepository
 import com.teikk.datn.data.model.Cart
+import com.teikk.datn.data.model.Feedback
 import com.teikk.datn.data.model.Order
 import com.teikk.datn.data.model.OrderItem
 import com.teikk.datn.data.model.Payment
@@ -31,6 +33,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -49,7 +52,8 @@ class DashBoardViewModel @Inject constructor(
     private val cartRepository: CartRepository,
     private val orderRepository: OrderRepository,
     private val summaryRepository: SummaryRepository,
-    private val orderItemRepository: OrderItemRepository
+    private val orderItemRepository: OrderItemRepository,
+    private val feedbackRepository: FeedBackRepository
 ) : ViewModel(){
     private val _paymentMethod = paymentMethodRepository.paymentMethodsLiveData
     val paymentMethod get() = _paymentMethod
@@ -65,8 +69,8 @@ class DashBoardViewModel @Inject constructor(
     val carts get() = _carts
     private val _orders = orderRepository.orders
     val orders get() = _orders
-    private val _orderItems = orderItemRepository.orderItems
-    val orderItems get() = _orderItems
+    private val _orderItem = MutableStateFlow<List<OrderItem>>(emptyList())
+    val orderItem get()= _orderItem
     val uid: String by lazy {
         sharedPreferenceUtils.getStringValue(UID, "")
     }
@@ -104,12 +108,14 @@ class DashBoardViewModel @Inject constructor(
             val deleteAllWishlistsTask = async { wishListRepository.deleteALllWishlists() }
             val deleteAllCartsTask = async { cartRepository.deleteALllCarts() }
             val deleteOrderTask = async { orderRepository.deleteALllOrders()}
+            val deleteOrderItemTask = async { orderItemRepository.deleteALllOrderItems()}
             // Chờ tất cả các task hoàn thành
             deleteUserTask.await()
             deleteAllUsersTask.await()
             deleteAllWishlistsTask.await()
             deleteAllCartsTask.await()
             deleteOrderTask.await()
+            deleteOrderItemTask.await()
             logoutSuccess()
         }
     }
@@ -144,6 +150,13 @@ class DashBoardViewModel @Inject constructor(
 
     fun fetchOrderData() = viewModelScope.launch(Dispatchers.IO) {
         orderRepository.fetchOrderRemote(uid)
+    }
+
+    fun fetchOrderItemData(orderID: String) = viewModelScope.launch(Dispatchers.IO) {
+        val response = orderItemRepository.fetchOrderItemRemote(orderID)
+        if (response.isSuccessful) {
+            _orderItem.value = response.body()!!
+        }
     }
 
     // FetchData
@@ -230,4 +243,9 @@ class DashBoardViewModel @Inject constructor(
     }
     // Order
 
+    // Feedback
+    fun sendFeedback(feedback: Feedback) = viewModelScope.launch(Dispatchers.IO) {
+        feedbackRepository.makeFeedBack(feedback)
+    }
+    // Feedback
 }

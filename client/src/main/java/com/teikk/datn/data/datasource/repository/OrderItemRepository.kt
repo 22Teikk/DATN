@@ -1,5 +1,6 @@
 package com.teikk.datn.data.datasource.repository
 
+import android.util.Log
 import com.teikk.datn.data.datasource.local.OrderItemLocalRepository
 import com.teikk.datn.data.datasource.remote.OrderItemRemoteRepository
 import com.teikk.datn.data.model.OrderItem
@@ -13,14 +14,11 @@ class OrderItemRepository @Inject constructor(
     private val orderItemRemoteRepository: OrderItemRemoteRepository,
     private val orderItemLocalRepository: OrderItemLocalRepository,
 ) {
-    private val _orderItems = MutableStateFlow<List<OrderItem>>(emptyList())
-    val orderItems get()= _orderItems
     init {
         fetchOrderItemLocal()
     }
     fun fetchOrderItemLocal() = CoroutineScope(Dispatchers.IO).launch {
         orderItemLocalRepository.getAllOrderItems().collect {
-            _orderItems.value = it
         }
     }
 
@@ -31,13 +29,8 @@ class OrderItemRepository @Inject constructor(
         fetchOrderItemLocal()
     }
 
-    fun fetchOrderItemRemote(orderID: String) = CoroutineScope(Dispatchers.IO).launch {
-        val response = orderItemRemoteRepository.getOrderItemForOrder(orderID)
-        if (response.isSuccessful) {
-            val orderItems = response.body()!!
-            orderItemLocalRepository.insertOrderItems(orderItems)
-        }
-    }
+    suspend fun fetchOrderItemRemote(orderID: String) =
+        orderItemRemoteRepository.getOrderItemForOrder(orderID)
 
     fun deleteALllOrderItems() = CoroutineScope(Dispatchers.IO).launch {
         orderItemLocalRepository.deleteAllOrderItems()
