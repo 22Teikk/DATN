@@ -26,6 +26,7 @@ import com.teikk.datn.data.model.Wishlist
 import com.teikk.datn.data.model.advanced.ProductCart
 import com.teikk.datn.data.service.socket.SocketManager
 import com.teikk.datn.utils.DateTimeConstant
+import com.teikk.datn.utils.NotificationHelper
 import com.teikk.datn.utils.Resource
 import com.teikk.datn.utils.ShareConstant
 import com.teikk.datn.utils.ShareConstant.UID
@@ -53,7 +54,8 @@ class DashBoardViewModel @Inject constructor(
     private val orderRepository: OrderRepository,
     private val summaryRepository: SummaryRepository,
     private val orderItemRepository: OrderItemRepository,
-    private val feedbackRepository: FeedBackRepository
+    private val feedbackRepository: FeedBackRepository,
+    private val notificationHelper: NotificationHelper
 ) : ViewModel(){
     private val _paymentMethod = paymentMethodRepository.paymentMethodsLiveData
     val paymentMethod get() = _paymentMethod
@@ -76,6 +78,7 @@ class DashBoardViewModel @Inject constructor(
     }
     init {
         initData()
+        connectSocket()
     }
 
     private fun initData() {
@@ -88,11 +91,17 @@ class DashBoardViewModel @Inject constructor(
         fetchWishlistData()
         fetchOrderData()
         fetchCartData()
-        socket.socketConnect()
     }
 
     fun connectSocket() {
         socket.socketConnect()
+        socket.joinCustomer(uid)
+        socket.onMessage {
+            if (it == uid) {
+                notificationHelper.showNotification("The order has been successfully delivered.", "" +
+                        "You can rate the quality of the order to help the store continue improving its services.")
+            }
+        }
     }
 
     // User

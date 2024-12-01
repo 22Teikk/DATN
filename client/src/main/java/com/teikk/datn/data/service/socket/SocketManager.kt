@@ -3,6 +3,7 @@ package com.teikk.datn.data.service.socket
 import android.util.Log
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
+import org.json.JSONObject
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -22,6 +23,26 @@ class SocketManager @Inject constructor(
                     mSocket.connect()
                 }
             })
+        }
+    }
+
+    fun joinCustomer(customerId: String) {
+        val data = JSONObject()
+        data.put("customer_id", customerId)
+        mSocket.emit("customer_join", data)
+    }
+
+    fun placeOrder(customerId: String, orderInfo: String) {
+        val data = JSONObject()
+        data.put("customer_id", customerId)
+        data.put("order_info", orderInfo)
+        mSocket.emit("customer_order", data)
+    }
+
+    fun onMessage(callback: (String) -> Unit) {
+        mSocket.on("message") { args ->
+            val data = args[0] as JSONObject
+            callback(data.get("customer_id").toString())
         }
     }
 
@@ -58,6 +79,7 @@ class SocketManager @Inject constructor(
         Log.d(TAG, "SocketManager Error connecting..." + args[0].toString())
         socketOff()
     }
+
 
     companion object {
         private const val TAG = "SocketManager"

@@ -50,7 +50,7 @@ class UpcomingFragment : BaseFragment<FragmentUpcomingBinding>() {
     override fun initObserver() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.orders.map {
-                it.filter { it.status == "Pending" }
+                it.filter { it.status == "Pending" || it.status == "Delivery" }
             }.collectLatest {
                 orderAdapter.submitList(it)
             }
