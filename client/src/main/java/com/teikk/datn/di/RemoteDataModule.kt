@@ -4,6 +4,7 @@ import com.teikk.datn.base.SharedPreferenceUtils
 import com.teikk.datn.data.datasource.remote.AuthRepository
 import com.teikk.datn.data.datasource.remote.CartRemoteRepository
 import com.teikk.datn.data.datasource.remote.CategoryRemoteRepository
+import com.teikk.datn.data.datasource.remote.OrderRemoteRepository
 import com.teikk.datn.data.datasource.remote.PaymentMethodRemoteRepository
 import com.teikk.datn.data.datasource.remote.ProductRemoteRepository
 import com.teikk.datn.data.datasource.remote.RoleRemoteRepository
@@ -86,5 +87,8 @@ object RemoteDataModule {
     @Singleton
     fun provideCartRemote(apiService: ApiService) = CartRemoteRepository(apiService)
 
+    @Provides
+    @Singleton
+    fun provideOrderRemote(apiService: ApiService) = OrderRemoteRepository(apiService)
 
 }

@@ -1,5 +1,7 @@
 package com.teikk.datn.view.dashboard.fragment
 
+import android.view.View
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -7,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.teikk.datn.R
 import com.teikk.datn.base.BaseFragment
+import com.teikk.datn.base.setSafeOnClickListener
+import com.teikk.datn.data.model.Order
 import com.teikk.datn.data.model.advanced.ProductCart
 import com.teikk.datn.databinding.FragmentCartBinding
 import com.teikk.datn.view.dashboard.DashBoardActivity
@@ -45,6 +49,12 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
                 layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
                 adapter = cartAdapter
             }
+            btnCheckout.setSafeOnClickListener {
+                val order = Order(total = txtCount.text.toString().toInt(), userId = viewModel.uid, description = edtDescription.text.toString(), isShipment = radShipment.isChecked)
+                viewModel.createOrder(order, txtTotal.text.toString().toDouble())
+                Toast.makeText(requireContext(), "Order created", Toast.LENGTH_LONG).show()
+                initObserver()
+            }
         }
         cartAdapter.listener = {item, position ->
             cartAdapter.notifyItemChanged(position)
@@ -52,7 +62,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
                 it.product.price * it.cart.quantity
             }
             binding.txtSubtotal.text = "$subTotal$"
-            binding.txtTotal.text = (subTotal - discount).toString() + "$"
+            binding.txtTotal.text = (subTotal - discount).toString()
         }
         cartAdapter.deleteListener = {item, position ->
             viewModel.deleteCart(item.cart)
@@ -60,8 +70,16 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
             subTotal = cartAdapter.currentList.sumOf {
                 it.product.price * it.cart.quantity
             }
-            binding.txtSubtotal.text = "$subTotal$"
-            binding.txtTotal.text = (subTotal - discount).toString() + "$"
+            if (cartAdapter.currentList.isEmpty()) {
+                binding.layoutEmpty.visibility = View.VISIBLE
+                binding.layoutData.visibility = View.GONE
+            } else {
+                binding.layoutEmpty.visibility = View.GONE
+                binding.layoutData.visibility = View.VISIBLE
+                binding.txtCount.text = cartAdapter.currentList.size.toString()
+                binding.txtSubtotal.text = subTotal.toString() + "$"
+                binding.txtTotal.text = (subTotal - discount).toString()
+            }
         }
     }
 
@@ -82,9 +100,16 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
                 subTotal = it.sumOf {
                     it.product.price * it.cart.quantity
                 }
-                binding.txtCount.text = it.size.toString() + " items"
-                binding.txtSubtotal.text = subTotal.toString() + "$"
-                binding.txtTotal.text = (subTotal - discount).toString() + "$"
+                if (it.isEmpty()) {
+                    binding.layoutEmpty.visibility = View.VISIBLE
+                    binding.layoutData.visibility = View.GONE
+                } else {
+                    binding.layoutEmpty.visibility = View.GONE
+                    binding.layoutData.visibility = View.VISIBLE
+                    binding.txtCount.text = it.size.toString()
+                    binding.txtSubtotal.text = subTotal.toString() + "$"
+                    binding.txtTotal.text = (subTotal - discount).toString()
+                }
             }
         }
     }

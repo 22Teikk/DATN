@@ -13,6 +13,6 @@ data class Payment(
     var amount: Double,
     @SerializedName("created_at")
     var createdAt: String = DateTimeConstant.getCurrentTimestampStr(),
-    @SerializedName("paymentmethod_id")
+    @SerializedName("payment_method_id")
     var paymentMethodID: String
 )

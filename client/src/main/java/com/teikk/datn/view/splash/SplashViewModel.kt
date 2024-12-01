@@ -7,6 +7,7 @@ import com.teikk.datn.MyApp
 import com.teikk.datn.base.SharedPreferenceUtils
 import com.teikk.datn.data.datasource.repository.CartRepository
 import com.teikk.datn.data.datasource.repository.CategoryRepository
+import com.teikk.datn.data.datasource.repository.OrderRepository
 import com.teikk.datn.data.datasource.repository.PaymentMethodRepository
 import com.teikk.datn.data.datasource.repository.RoleRepository
 import com.teikk.datn.data.datasource.repository.SummaryRepository
@@ -25,7 +26,8 @@ class SplashViewModel @Inject constructor(
     private val paymentMethodRepository: PaymentMethodRepository,
     private val summaryRepository: SummaryRepository,
     private val wishListRepository: WishListRepository,
-    private val cartRepository: CartRepository
+    private val cartRepository: CartRepository,
+    private val orderRepository: OrderRepository
 ) : ViewModel() {
     private val TAG = "SplashViewModel-TAG"
     private val _isFirstTime = MutableLiveData<Boolean>()
@@ -57,6 +59,7 @@ class SplashViewModel @Inject constructor(
         if (uid != "") {
             wishListRepository.fetchWishlistRemote(uid)
             cartRepository.fetchCartRemote(uid)
+            orderRepository.fetchOrderRemote(uid)
         }
     }
 }

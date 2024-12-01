@@ -3,6 +3,8 @@ package com.teikk.datn.data.service
 import com.google.gson.JsonObject
 import com.teikk.datn.data.model.Cart
 import com.teikk.datn.data.model.Category
+import com.teikk.datn.data.model.Order
+import com.teikk.datn.data.model.Payment
 import com.teikk.datn.data.model.PaymentMethod
 import com.teikk.datn.data.model.Product
 import com.teikk.datn.data.model.Role
@@ -85,5 +87,15 @@ interface ApiService {
     suspend fun updateCart(@Path("id") id: String,@Body cart: Cart) : Response<Cart>
     // Cart
 
+    // Order
+    @GET("api/v1/orders/user")
+    suspend fun getOrderForUser(
+        @Query("uid") uid: String
+    ): Response<List<Order>>
+    @POST("api/v1/orders")
+    suspend fun addToOrder(@Body order: Order): Response<Order>
 
+    // Payment
+    @POST("api/v1/payments")
+    suspend fun makePayment(@Body payment: Payment): Response<Payment>
 }

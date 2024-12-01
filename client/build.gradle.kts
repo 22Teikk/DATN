@@ -82,6 +82,7 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
+    kapt("android.arch.persistence.room:compiler:1.0.0-alpha4")
 
     // Responsive
     implementation(libs.sdp.android)

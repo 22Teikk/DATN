@@ -4,6 +4,7 @@ import android.content.Context
 import com.teikk.datn.data.service.DatabaseApp
 import com.teikk.datn.data.service.dao.CartDao
 import com.teikk.datn.data.service.dao.CategoryDao
+import com.teikk.datn.data.service.dao.OrderDao
 import com.teikk.datn.data.service.dao.PaymentMethodDao
 import com.teikk.datn.data.service.dao.ProductDao
 import com.teikk.datn.data.service.dao.RoleDao
@@ -66,5 +67,11 @@ object RoomModule {
     @Singleton
     fun provideCartDao(databaseApp: DatabaseApp) : CartDao {
         return databaseApp.cartDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideOrderDao(databaseApp: DatabaseApp) : OrderDao {
+        return databaseApp.orderDao()
     }
 }

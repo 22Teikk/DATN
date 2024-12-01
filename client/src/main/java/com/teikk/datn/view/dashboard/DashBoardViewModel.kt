@@ -4,18 +4,24 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.libraries.places.api.model.FuelPrice
 import com.teikk.datn.base.SharedPreferenceUtils
 import com.teikk.datn.data.datasource.repository.CartRepository
 import com.teikk.datn.data.datasource.repository.CategoryRepository
+import com.teikk.datn.data.datasource.repository.OrderRepository
 import com.teikk.datn.data.datasource.repository.PaymentMethodRepository
 import com.teikk.datn.data.datasource.repository.ProductRepository
+import com.teikk.datn.data.datasource.repository.SummaryRepository
 import com.teikk.datn.data.datasource.repository.UploadFileRepository
 import com.teikk.datn.data.datasource.repository.UserProfileRepository
 import com.teikk.datn.data.datasource.repository.WishListRepository
 import com.teikk.datn.data.model.Cart
+import com.teikk.datn.data.model.Order
+import com.teikk.datn.data.model.Payment
 import com.teikk.datn.data.model.UserProfile
 import com.teikk.datn.data.model.Wishlist
 import com.teikk.datn.data.service.socket.SocketManager
+import com.teikk.datn.utils.DateTimeConstant
 import com.teikk.datn.utils.Resource
 import com.teikk.datn.utils.ShareConstant
 import com.teikk.datn.utils.ShareConstant.UID
@@ -40,7 +46,9 @@ class DashBoardViewModel @Inject constructor(
     private val uploadFileRepository: UploadFileRepository,
     private val productRepository: ProductRepository,
     private val wishListRepository: WishListRepository,
-    private val cartRepository: CartRepository
+    private val cartRepository: CartRepository,
+    private val orderRepository: OrderRepository,
+    private val summaryRepository: SummaryRepository
 ) : ViewModel(){
     private val _paymentMethod = paymentMethodRepository.paymentMethodsLiveData
     val paymentMethod get() = _paymentMethod
@@ -68,6 +76,9 @@ class DashBoardViewModel @Inject constructor(
             wishListRepository.fetchWishlistRemote(uid)
         }
         fetchProductData()
+        fetchWishlistData()
+        fetchOrderData()
+        fetchCartData()
         socket.socketConnect()
     }
 
@@ -87,12 +98,13 @@ class DashBoardViewModel @Inject constructor(
             val deleteAllUsersTask = async { userProfileRepository.deleteAllUser() }
             val deleteAllWishlistsTask = async { wishListRepository.deleteALllWishlists() }
             val deleteAllCartsTask = async { cartRepository.deleteALllCarts() }
-
+            val deleteOrderTask = async { orderRepository.deleteALllOrders()}
             // Chờ tất cả các task hoàn thành
             deleteUserTask.await()
             deleteAllUsersTask.await()
             deleteAllWishlistsTask.await()
             deleteAllCartsTask.await()
+            deleteOrderTask.await()
             logoutSuccess()
         }
     }
@@ -112,7 +124,7 @@ class DashBoardViewModel @Inject constructor(
     //User
 
 
-    // Product
+    // FetchData
     fun fetchProductData() = viewModelScope.launch(Dispatchers.IO) {
         productRepository.fetchProductRemote()
         productRepository.fetchProductLocal()
@@ -125,7 +137,11 @@ class DashBoardViewModel @Inject constructor(
         cartRepository.fetchCartRemote(uid)
     }
 
-    // Product
+    fun fetchOrderData() = viewModelScope.launch(Dispatchers.IO) {
+        orderRepository.fetchOrderRemote(uid)
+    }
+
+    // FetchData
     fun uploadFile(file: File, callback: (String?) -> Unit) = viewModelScope.launch(Dispatchers.IO) {
         val result = uploadFileRepository.uploadFile(file)
         withContext(Dispatchers.Main) {
@@ -164,5 +180,29 @@ class DashBoardViewModel @Inject constructor(
         cartRepository.updateManyCarts(carts)
     }
     // Cart
+
+    // Order
+    fun createOrder(order: Order, price: Double) = viewModelScope.launch(Dispatchers.IO) {
+        val payment = Payment(
+            id = "",
+            amount = price,
+            paymentMethodID = "1",
+            createdAt = DateTimeConstant.getCurrentTimestampStr(),
+        )
+        val createPayment = summaryRepository.makePayment(payment)
+        if (createPayment.isSuccessful) {
+            val newPayment = payment.copy(id = createPayment.body()!!.id)
+            order.paymentId = newPayment.id
+            val response =  orderRepository.insertOrderRemote(order)
+            if (response.isSuccessful) {
+                val newOrder = order.copy(
+                    id = response.body()!!.id,
+                )
+                orderRepository.insertOrderLocal(newOrder)
+                cartRepository.deleteALllCarts()
+            }
+        }
+    }
+    // Order
 
 }
