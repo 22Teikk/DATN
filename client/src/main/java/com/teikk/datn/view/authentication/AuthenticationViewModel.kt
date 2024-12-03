@@ -4,8 +4,6 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.viewModelFactory
-import com.bumptech.glide.Glide.init
 import com.google.gson.Gson
 import com.teikk.datn.base.SharedPreferenceUtils
 import com.teikk.datn.data.datasource.local.RoleLocalRepository
@@ -56,7 +54,7 @@ class AuthenticationViewModel @Inject constructor(
     }
 
     fun register(email: String, password: String, isSuccess: (Boolean) -> Unit) = viewModelScope.launch(Dispatchers.IO) {
-        val userProfile = UserProfile(password = password, username = email, name = email, email = email, lat = 0.0, long = 0.0)
+        val userProfile = UserProfile(password = password, username = email, name = email, email = email, lat = 0.0, longtitude = 0.0)
         val response = authRepository.register(userProfile)
         if (response.isSuccessful) {
             withContext(Dispatchers.Main) {

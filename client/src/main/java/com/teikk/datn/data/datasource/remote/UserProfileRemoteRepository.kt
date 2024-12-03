@@ -11,4 +11,5 @@ class UserProfileRemoteRepository @Inject constructor(
     private val sharedPreferenceUtils: SharedPreferenceUtils
 ) {
     suspend fun updateUserProfile(user: UserProfile) = apiService.updateUserProfile(ShareConstant.getAdminHeaders(sharedPreferenceUtils), user.id, user)
+    suspend fun getUserProfile(userId: String) = apiService.getAllUserProfileByID(userId)
 }

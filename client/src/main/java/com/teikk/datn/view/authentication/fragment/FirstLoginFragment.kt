@@ -70,7 +70,7 @@ class FirstLoginFragment : BaseFragment<FragmentFirstLoginBinding>() {
                                     name = edtName.text.toString(),
                                     phone = edtPhone.text.toString(),
                                     lat = lat,
-                                    long = long,
+                                    longtitude = long,
                                     address = requireContext().getAddressByLocation(lat, long),
                                     imageUrl = url
                                 )
@@ -84,7 +84,7 @@ class FirstLoginFragment : BaseFragment<FragmentFirstLoginBinding>() {
                         name = edtName.text.toString(),
                         phone = edtPhone.text.toString(),
                         lat = lat,
-                        long = long,
+                        longtitude = long,
                         address = requireContext().getAddressByLocation(lat, long),
                     )
                     Log.d("swlkdjfglksdjfgklsjdfkl", user.toString())

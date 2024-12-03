@@ -1,5 +1,6 @@
 package com.teikk.datn.view.dashboard.fragment.order
 
+import android.content.Intent
 import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
@@ -17,6 +18,7 @@ import com.teikk.datn.databinding.FragmentOrderDetailBinding
 import com.teikk.datn.view.dashboard.DashBoardActivity
 import com.teikk.datn.view.dashboard.DashBoardViewModel
 import com.teikk.datn.view.dashboard.adapter.OrderItemAdapter
+import com.teikk.datn.view.map.MapsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
@@ -36,6 +38,11 @@ class OrderDetailFragment(
 
     override fun init() {
         (requireActivity() as DashBoardActivity).closeDrawerAndHideBottomNav()
+        if (args.order.status == "Delivery") {
+            binding.btnSee.visibility = View.VISIBLE
+        } else {
+            binding.btnSee.visibility = View.GONE
+        }
         if (!args.isFeedback) {
             binding.btnSubmit.visibility = View.GONE
         }else {
@@ -69,6 +76,12 @@ class OrderDetailFragment(
                 }
                 viewModel.updateOrder(args.order.copy(status = "Success"))
                 findNavController().navigateUp()
+            }
+            btnSee.setOnClickListener {
+                val intent = Intent(requireContext(), MapsActivity::class.java)
+                intent.putExtra("order", args.order)
+                intent.putExtra("user", viewModel.user.value!!.data)
+                startActivity(intent)
             }
         }
     }

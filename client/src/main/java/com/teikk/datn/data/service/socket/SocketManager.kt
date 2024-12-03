@@ -1,6 +1,7 @@
 package com.teikk.datn.data.service.socket
 
 import android.util.Log
+import com.teikk.datn.data.model.advanced.EmployeeLocation
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
 import org.json.JSONObject
@@ -43,6 +44,20 @@ class SocketManager @Inject constructor(
         mSocket.on("message") { args ->
             val data = args[0] as JSONObject
             callback(data.get("customer_id").toString())
+        }
+    }
+
+    fun onGetLocation(callback: (EmployeeLocation) -> Unit) {
+        mSocket.on("get_location") { args ->
+            val data = args[0] as JSONObject
+            val uid = data.get("customer_id") as String
+            val orderId = data.get("order_id") as String
+            val lat = data.get("lat") as Double
+            val long = data.get("long") as Double
+            Log.d("ajkljhflkasdjfkldsj", "UserID: " + uid)
+            Log.d("ajkljhflkasdjfkldsj", "OrderID: " + orderId)
+            val employeeLocation = EmployeeLocation(uid,orderId, lat, long)
+            callback(employeeLocation)
         }
     }
 

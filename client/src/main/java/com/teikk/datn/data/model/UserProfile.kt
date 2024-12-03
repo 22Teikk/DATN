@@ -1,11 +1,10 @@
 package com.teikk.datn.data.model
 
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.teikk.datn.utils.DateTimeConstant
-import java.util.Date
+import java.io.Serializable
 
 @Entity(tableName = "user_table")
 data class UserProfile(
@@ -20,7 +19,8 @@ data class UserProfile(
     @SerializedName("image_url")
     var imageUrl: String? = null,
     var lat: Double = 0.0,
-    var long: Double = 0.0,
+    @SerializedName("long")
+    var longtitude: Double = 0.0,
     var name: String = "",
     var password: String = "",
     var phone: String = "",
@@ -29,4 +29,4 @@ data class UserProfile(
     @SerializedName("store_id")
     var storeId: String? = null,
     var username: String = ""
-)
+) : Serializable

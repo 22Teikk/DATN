@@ -62,7 +62,7 @@ class AddressFragment : BaseFragment<FragmentAddressBinding>(), OnMapReadyCallba
             val location = binding.edtAddress.text.toString()
             val userUpdate = viewModel.user.value?.data!!.copy(
                 lat = lat,
-                long = long,
+                longtitude = long,
                 address = location
             )
             viewModel.updateUser(userUpdate)
@@ -80,7 +80,7 @@ class AddressFragment : BaseFragment<FragmentAddressBinding>(), OnMapReadyCallba
         mapGG = googleMap
         viewModel.user.observe(viewLifecycleOwner) {
             lat = it.data?.lat!!
-            long = it.data?.long!!
+            long = it.data?.longtitude!!
             binding.edtAddress.setText(it.data?.address)
             mapGG.apply {
                 moveCamera(

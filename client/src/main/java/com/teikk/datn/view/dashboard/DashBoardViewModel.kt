@@ -230,6 +230,9 @@ class DashBoardViewModel @Inject constructor(
                     id = response.body()!!.id,
                 )
                 orderRepository.insertOrderLocal(newOrder)
+                carts.value.forEach {
+                    cartRepository.deleteCart(it)
+                }
                 cartRepository.deleteALllCarts()
                 list.forEach {
                     val product = it.product

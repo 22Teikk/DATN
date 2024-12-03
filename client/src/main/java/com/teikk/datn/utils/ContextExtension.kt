@@ -1,6 +1,14 @@
 package com.teikk.datn.utils
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
+import android.graphics.Rect
+import android.graphics.RectF
+import android.graphics.drawable.Drawable
 import android.location.Address
 import android.location.Geocoder
 import android.net.Uri
@@ -30,6 +38,42 @@ fun Context.uriToFile(uri: Uri): File? {
     }
     return tempFile
 }
+
+
+fun Context.drawBitmapIntoVector(bitmap: Bitmap, vectorDrawable: Drawable): Bitmap {
+    val resultBitmap = Bitmap.createBitmap(110, 125, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(resultBitmap)
+    vectorDrawable.setBounds(0, 0, canvas.width, canvas.height)
+    vectorDrawable.draw(canvas)
+    val bitmapStartX = (canvas.width - bitmap.width) / 2f
+    val bitmapStartY = ((canvas.height - bitmap.height) / 2f) - 12f
+    canvas.drawBitmap(bitmap, bitmapStartX, bitmapStartY, null)
+    return resultBitmap
+}
+
+fun Context.roundBitmap(bitmap: Bitmap, targetWidth: Int, targetHeight: Int): Bitmap {
+    val startX = (bitmap.width - targetWidth) / 2
+    val startY = (bitmap.height - targetHeight) / 2
+    val targetBitmap = Bitmap.createBitmap(targetWidth, targetHeight, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(targetBitmap)
+    canvas.drawBitmap(
+        bitmap,
+        Rect(startX, startY, startX + targetWidth, startY + targetHeight),
+        Rect(0, 0, targetWidth, targetHeight),
+        null
+    )
+    val roundedBitmap = Bitmap.createBitmap(targetWidth, targetHeight, Bitmap.Config.ARGB_8888)
+    val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    val radius = (targetWidth.coerceAtMost(targetHeight) / 2).toFloat()
+    val rect = Rect(0, 0, targetWidth, targetHeight)
+    val rectF = RectF(rect)
+    val canvasRounded = Canvas(roundedBitmap)
+    canvasRounded.drawRoundRect(rectF, radius, radius, paint)
+    paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
+    canvasRounded.drawBitmap(targetBitmap, rect, rect, paint)
+    return roundedBitmap
+}
+
 
 fun Context.createImageFile(): File {
     // Create an image file name

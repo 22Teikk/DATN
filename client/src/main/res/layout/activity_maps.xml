@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_height="match_parent">
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            map:uiZoomControls="true"
+            map:uiRotateGestures="true"
+            map:cameraTilt="30"
+            android:layout_height="match_parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/_30sdp" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnBack"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_width="@dimen/_35sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/gline"
+            android:layout_height="@dimen/_35sdp"
+            android:shadowColor="#D3D1D8"
+            android:layout_gravity="center_vertical"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardElevation="@dimen/_5sdp"
+            app:cardBackgroundColor="@color/white">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/_10sdp"
+                android:src="@drawable/icon_back"/>
+        </androidx.cardview.widget.CardView>
+
+
+        <ImageView
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:id="@+id/imgMapType"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/gline"
+            android:background="@drawable/background_edittext"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:padding="@dimen/_10sdp"
+            android:src="@drawable/icon_map_type"
+             />
+
+        <ImageView
+            android:id="@+id/imgEmployeeLocation"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/background_edittext"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:padding="@dimen/_10sdp"
+            android:src="@drawable/icon_customer_location"
+            app:layout_constraintEnd_toEndOf="@+id/imgMapType"
+            app:layout_constraintStart_toStartOf="@+id/imgMapType"
+            app:layout_constraintTop_toBottomOf="@+id/imgMapType" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            map:layout_constraintEnd_toEndOf="parent"
+            map:layout_constraintBottom_toBottomOf="parent"
+            android:layout_margin="@dimen/_10sdp"
+            android:id="@+id/imgMyLocation"
+            android:src="@drawable/icon_location"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

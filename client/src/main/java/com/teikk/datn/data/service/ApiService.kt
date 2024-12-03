@@ -54,6 +54,10 @@ interface ApiService {
     // User Profile
     @PUT("api/v1/user_profiles/{id}")
     suspend fun updateUserProfile(@HeaderMap adminHeaders: Map<String, String> ,@Path("id") id: String,@Body userProfile: UserProfile) : Response<UserProfile>
+    @GET("api/v1/user_profiles/{id}")
+    suspend fun getAllUserProfileByID(
+        @Path("id") id: String
+    ): Response<UserProfile>
     // User Profile
 
     // Product API

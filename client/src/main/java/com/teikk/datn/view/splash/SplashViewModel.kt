@@ -11,7 +11,9 @@ import com.teikk.datn.data.datasource.repository.OrderRepository
 import com.teikk.datn.data.datasource.repository.PaymentMethodRepository
 import com.teikk.datn.data.datasource.repository.RoleRepository
 import com.teikk.datn.data.datasource.repository.SummaryRepository
+import com.teikk.datn.data.datasource.repository.UserProfileRepository
 import com.teikk.datn.data.datasource.repository.WishListRepository
+import com.teikk.datn.data.model.UserProfile
 import com.teikk.datn.utils.ShareConstant.UID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -27,7 +29,8 @@ class SplashViewModel @Inject constructor(
     private val summaryRepository: SummaryRepository,
     private val wishListRepository: WishListRepository,
     private val cartRepository: CartRepository,
-    private val orderRepository: OrderRepository
+    private val orderRepository: OrderRepository,
+    private val userProfileRepository: UserProfileRepository
 ) : ViewModel() {
     private val TAG = "SplashViewModel-TAG"
     private val _isFirstTime = MutableLiveData<Boolean>()
@@ -60,6 +63,7 @@ class SplashViewModel @Inject constructor(
             wishListRepository.fetchWishlistRemote(uid)
             cartRepository.fetchCartRemote(uid)
             orderRepository.fetchOrderRemote(uid)
+            userProfileRepository.getUserProfileRemote(uid)
         }
     }
 }

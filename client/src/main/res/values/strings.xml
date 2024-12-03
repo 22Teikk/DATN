@@ -19,5 +19,6 @@
     <string name="permission_two">The Location permission enables the app to access your current location. This is necessary for the app:\n• To share your location with your friend.\n• In emergency cases, the app can send SOS alerts immediately with your location to friends.</string>
     <string name="permission_three">The \"Stop battery optimization\" permission ensures that the app continues to run in the background, it\'s necessary for:\n• Continuous location updates.\n• Maintaining connection.\n\nThere is the potential that granting this permission can increase the app\'s battery usage. However, it is necessary because of improving the performance and reliability of the location-sharing app.</string>
     <string name="permission_four">Enable the app to run in the background and autostart to to access your current location. This is necessary for the app:\n• To share your location with your friend.\n• In emergency cases, the app can send SOS alerts immediately with your location to friends.</string>
+    <string name="title_activity_maps">MapsActivity</string>
 
-    </resources>
+</resources>
