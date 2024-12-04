@@ -40,11 +40,6 @@ class AddressFragment : BaseFragment<FragmentAddressBinding>(), OnMapReadyCallba
     private var lat: Double = 0.0
     private var long: Double = 0.0
 
-
-    private val fusedLocationClient: FusedLocationProviderClient by lazy {
-        LocationServices.getFusedLocationProviderClient(requireActivity())
-    }
-
     override fun getLayoutResId(): Int {
         return R.layout.fragment_address
     }
@@ -151,29 +146,6 @@ class AddressFragment : BaseFragment<FragmentAddressBinding>(), OnMapReadyCallba
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 return@setOnClickListener
-            }
-            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-                mapGG.apply {
-                    if (location != null) {
-                        moveCamera(
-                            CameraUpdateFactory.newLatLngZoom(
-                                LatLng(
-                                    location.latitude,
-                                    location.longitude
-                                ), 18f
-                            )
-                        )
-                        marker = addMarker(
-                            MarkerOptions().position(
-                                LatLng(
-                                    location.latitude,
-                                    location.longitude
-                                )
-                            )
-                        )!!
-
-                    }
-                }
             }
         }
 

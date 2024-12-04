@@ -88,6 +88,7 @@ fun Context.createImageFile(): File {
     )
 }
 
+
 fun Context.getAddressByLocation(latitude: Double, longitude: Double): String {
     val geocoder = Geocoder(this, Locale.getDefault())
     var result = ""
@@ -95,8 +96,17 @@ fun Context.getAddressByLocation(latitude: Double, longitude: Double): String {
         val addresses: List<Address> =
             geocoder.getFromLocation(latitude, longitude, 1)!!.toMutableList()
         if (addresses.isNotEmpty()) {
-            result =
-                "${addresses[0].subAdminArea}, ${addresses[0].adminArea}, ${addresses[0].countryName}"
+            if (!addresses[0].subThoroughfare.isNullOrEmpty() && !addresses[0].thoroughfare.isNullOrEmpty())
+                result =
+                    "${addresses[0].subThoroughfare}, ${addresses[0].thoroughfare}, ${addresses[0].subAdminArea},${addresses[0].adminArea}"
+            else if (addresses[0].subThoroughfare.isNullOrEmpty() && !addresses[0].thoroughfare.isNullOrEmpty())
+                result =
+                    "${addresses[0].thoroughfare}, ${addresses[0].subAdminArea},${addresses[0].adminArea}"
+            else if (!addresses[0].subThoroughfare.isNullOrEmpty() && addresses[0].thoroughfare.isNullOrEmpty())
+                result =
+                    "${addresses[0].subThoroughfare}, ${addresses[0].subAdminArea},${addresses[0].adminArea}"
+            else result =
+                "${addresses[0].subAdminArea},${addresses[0].adminArea}"
         }
     } catch (e: Exception) {
         e.printStackTrace()
