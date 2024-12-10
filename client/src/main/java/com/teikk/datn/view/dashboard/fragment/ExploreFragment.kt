@@ -1,5 +1,6 @@
 package com.teikk.datn.view.dashboard.fragment
 
+import android.content.Intent
 import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
@@ -61,6 +62,11 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>() {
             swipeRefresh.setOnRefreshListener {
                 viewModel.fetchProductData()
                 swipeRefresh.isRefreshing = false
+            }
+            svProduct.setOnQueryTextFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    findNavController().navigate(R.id.searchFragment)
+                }
             }
         }
         categoryAdapter.listener = { item, position ->

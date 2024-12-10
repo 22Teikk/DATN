@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp"
+        android:orientation="horizontal">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnBack"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:shadowColor="#D3D1D8"
+            android:layout_gravity="center_vertical"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardElevation="@dimen/_5sdp"
+            app:cardBackgroundColor="@color/white">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/_10sdp"
+                android:src="@drawable/icon_back"/>
+        </androidx.cardview.widget.CardView>
+
+
+        <SearchView
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/background_edittext"
+            android:layout_width="match_parent"
+            android:queryBackground="@android:color/transparent"
+            android:iconifiedByDefault="false"
+            android:inputType="text"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:searchIcon="@drawable/icon_search"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:queryHint="Find for food..."
+            android:layout_height="@dimen/_35sdp"
+            android:id="@+id/svProduct"/>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_height="match_parent"
+        android:id="@+id/rcvProduct"/>
+
+</LinearLayout>
+</layout>

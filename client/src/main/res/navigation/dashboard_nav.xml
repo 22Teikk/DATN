@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_exploreFragment_to_productDetailFragment"
             app:destination="@id/productDetailFragment" />
+        <action
+            android:id="@+id/action_exploreFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/cartFragment"
@@ -91,4 +94,8 @@
             android:name="order"
             app:argType="com.teikk.datn.data.model.Order" />
     </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.teikk.datn.view.dashboard.fragment.SearchFragment"
+        android:label="SearchFragment" />
 </navigation>
