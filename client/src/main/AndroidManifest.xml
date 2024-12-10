@@ -29,7 +29,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="${apiKey}" />
 
-
+        <meta-data
+            android:name="apiKey"
+            android:value="${apiKey}" />
         <activity
             android:name=".view.map.MapsActivity"
             android:exported="false"

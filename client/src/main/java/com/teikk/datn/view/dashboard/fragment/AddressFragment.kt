@@ -13,6 +13,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -22,6 +23,12 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.net.FetchPlaceRequest
+import com.google.android.libraries.places.api.net.PlacesClient
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.teikk.datn.R
 import com.teikk.datn.base.BaseFragment
 import com.teikk.datn.databinding.FragmentAddressBinding
@@ -49,6 +56,28 @@ class AddressFragment : BaseFragment<FragmentAddressBinding>(), OnMapReadyCallba
         mapFragment?.getMapAsync(this)
     }
 
+    fun fetchLatLngFromPlaceId(placeId: String, onResult: (Double, Double) -> Unit, onError: (Exception) -> Unit) {
+        val placesClient: PlacesClient = Places.createClient(context)
+
+        val placeFields = listOf(Place.Field.LAT_LNG) // Chỉ yêu cầu LatLng
+        val request = FetchPlaceRequest.builder(placeId, placeFields).build()
+
+        placesClient.fetchPlace(request)
+            .addOnSuccessListener { response ->
+                val place = response.place
+                val latLng = place.latLng
+                if (latLng != null) {
+                    onResult(latLng.latitude, latLng.longitude)
+                } else {
+                    onError(Exception("LatLng is null"))
+                }
+            }
+            .addOnFailureListener { exception ->
+                onError(exception)
+            }
+    }
+
+
     override fun initEvent() {
         binding.btnBack.setOnClickListener {
             findNavController().navigateUp()
@@ -62,6 +91,52 @@ class AddressFragment : BaseFragment<FragmentAddressBinding>(), OnMapReadyCallba
             )
             viewModel.updateUser(userUpdate)
         }
+        val autocompleteFragment =
+            childFragmentManager.findFragmentById(R.id.autocomplete_fragment)
+                    as AutocompleteSupportFragment
+
+        // Specify the types of place data to return.
+        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME))
+
+        // Set up a PlaceSelectionListener to handle the response.
+        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+            override fun onPlaceSelected(place: Place) {
+                Log.i("skjdfhajksdfhjkadsfhk", "An error occurred: ${place.id.toString()}")
+                place.id?.let {
+                    fetchLatLngFromPlaceId(
+                        it,
+                        onResult = { latitude, longitude ->
+                            lat = latitude
+                            long = longitude
+                            mapGG.apply {
+                                moveCamera(
+                                    CameraUpdateFactory.newLatLngZoom(
+                                        LatLng(latitude, longitude), 18f
+                                    )
+                                )
+                                marker = addMarker(
+                                    MarkerOptions().position(
+                                        LatLng(latitude, longitude)
+                                    )
+                                )!!
+                            }
+                            binding.edtAddress.setText(requireContext().getAddressByLocation(lat, long))
+
+                        },
+                        onError = { error ->
+                            Log.e("PlaceInfo", "Error fetching place: ${error.message}")
+                        }
+                    )
+                }
+
+            }
+
+            override fun onError(status: Status) {
+                Toast.makeText(requireContext(), "Something error occurred", Toast.LENGTH_SHORT).show()
+                // TODO: Handle the error.
+                Log.i("skjdfhajksdfhjkadsfhk", "An error occurred: $status")
+            }
+        })
     }
 
     override val onBackPressedCallback: OnBackPressedCallback
@@ -96,47 +171,8 @@ class AddressFragment : BaseFragment<FragmentAddressBinding>(), OnMapReadyCallba
                 )!!
             }
         }
-        binding.edtSearch.setOnFocusChangeListener { view, hasFocus ->
-            if (hasFocus) {
-                binding.icSearch.visibility = View.GONE
-            }
-        }
-
-        binding.edtSearch.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_NULL ) {
-                val location = binding.edtSearch.text.toString()
-                Log.d("aksjdfhadjksfhh", location)
-//
-                val geocoder = Geocoder(requireContext())
-                val addresses: List<Address>? = geocoder.getFromLocationName(location, 1)
-
-                if (!addresses.isNullOrEmpty()) {
-                    val address = addresses[0]
-                    val latLng = LatLng(address.latitude, address.longitude)
-
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-                    binding.edtAddress.setText(requireContext().getAddressByLocation(latLng.latitude, latLng.longitude))
-
-                    mapGG.clear()
-                    marker = mapGG.addMarker(
-                        MarkerOptions().position(
-                            latLng
-                        )
-                    )!!
-                } else {
-                    // Xử lý trường hợp không tìm thấy địa điểm
-                    Toast.makeText(requireContext(), "Không tìm thấy địa điểm", Toast.LENGTH_SHORT).show()
-                }
-                true
-            } else {
-                false
-            }
-        }
 
         binding.icLocation.setOnClickListener {
-            binding.icSearch.visibility = View.VISIBLE
-            binding.edtSearch.setText("")
-            binding.edtSearch.clearFocus()
             if (ActivityCompat.checkSelfPermission(
                     requireContext(),
                     Manifest.permission.ACCESS_FINE_LOCATION

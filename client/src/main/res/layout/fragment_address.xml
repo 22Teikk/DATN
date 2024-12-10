@@ -39,6 +39,13 @@
                 android:text="Address"/>
 
         </FrameLayout>
+
+        <fragment android:id="@+id/autocomplete_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            />
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_margin="@dimen/_20sdp"
@@ -54,38 +61,6 @@
                     android:layout_height="match_parent"
                     tools:layout_editor_absoluteX="35dp"
                     tools:layout_editor_absoluteY="66dp" />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="@dimen/_7sdp"
-                    android:layout_marginStart="@dimen/_14sdp"
-                    android:layout_marginEnd="@dimen/_14sdp"
-                    android:background="@drawable/background_edittext"
-                    android:padding="@dimen/_2sdp">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/icon_search"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_gravity="center_vertical"
-                        android:id="@+id/ic_search"/>
-                    <EditText
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_30sdp"
-                        android:background="@null"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="@dimen/_10sdp"
-                        android:textSize="15sp"
-                        android:singleLine="true"
-                        android:hint="Search..."
-                        android:maxLines="1"
-                        android:id="@+id/edt_search"/>
-
-                </LinearLayout>
-
-
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
